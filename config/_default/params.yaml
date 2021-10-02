@@ -26,7 +26,7 @@ address:
   street: 2500 University Drive NW
   city: Calgary
   region: AB
-  postcode: 'T2N1N4'
+  postcode: 'T2N 1N4'
   country: Canada
   country_code: CAN
 coordinates:
@@ -143,4 +143,4 @@ cms:
   local_backend: false
 icon:
   pack:
-    ai: false
+    ai: true
