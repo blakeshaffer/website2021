@@ -6,7 +6,7 @@ theme: "starter-hugo-academic"
 
 title: Academic # Website name
 baseurl: 'https://academic-demo.netlify.app/' # Website URL
-copyright: '' # Footer text, e.g. '© {year} Me'
+copyright: '© Blake Shaffer {year}'
 
 ############################
 ## LANGUAGE
