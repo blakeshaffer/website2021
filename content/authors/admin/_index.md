@@ -1,5 +1,5 @@
 ---
-bio: My bio blah blah
+bio: My bio goes here
 education:
   courses:
   - course: PhD in Economics
