@@ -136,6 +136,14 @@ The variance of the distribution is $\sigma^{2}$.
     </item>
     
     <item>
+      <title>Technical pathways to aligning Canadian electricity systems with net zero goals</title>
+      <link>https://blakeshaffer.ca/publication/cicc2021/</link>
+      <pubDate>Sun, 03 Oct 2021 00:00:00 +0000</pubDate>
+      <guid>https://blakeshaffer.ca/publication/cicc2021/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Attitudes, behaviours and barriers to public health measures for COVID-19: a survey to inform public health messaging</title>
       <link>https://blakeshaffer.ca/publication/bmc2021/</link>
       <pubDate>Wed, 21 Apr 2021 00:00:00 +0000</pubDate>
@@ -362,7 +370,7 @@ data.head()
 &lt;p&gt;Demo:&lt;/p&gt;
 
 
-&lt;div id=&#34;chart-863792415&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-632549718&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   (function() {
     let a = setInterval( function() {
@@ -372,7 +380,7 @@ data.head()
       clearInterval( a );
 
       Plotly.d3.json(&#34;./line-chart.json&#34;, function(chart) {
-        Plotly.plot(&#39;chart-863792415&#39;, chart.data, chart.layout, {responsive: true});
+        Plotly.plot(&#39;chart-632549718&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();

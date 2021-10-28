@@ -1,49 +1,30 @@
----
-# An instance of the Featurette widget.
-# Documentation: https://wowchemy.com/docs/page-builder/
-widget: featurette
++++
+# Custom widget.
+# An example of using the custom widget to create your own homepage section.
+# To create more sections, duplicate this file and edit the values below as desired.
+widget = "custom"
+active = false
+date = 2016-04-20T00:00:00
 
-# Activate this widget? true/false
-active: false
+# Note: a full width section format can be enabled by commenting out the `title` and `subtitle` with a `#`.
+title = "Teaching"
+subtitle = ""
 
-# This file represents a page section.
-headless: true
+# Order that this section will appear in.
+weight = 40
 
-# Order that this section appears on the page.
-weight: 30
++++
 
-title: Skills
-subtitle:
+This is an example of using the *custom* widget to create your own homepage section.
 
-# Showcase personal skills or business features.
-# - Add/remove as many `feature` blocks below as you like.
-# - For available icons, see: https://wowchemy.com/docs/page-builder/#icons
-feature:
-- description: 90%
-  icon: r-project
-  icon_pack: fab
-  name: R
-- description: 100%
-  icon: chart-line
-  icon_pack: fas
-  name: Statistics
-- description: 10%
-  icon: camera-retro
-  icon_pack: fas
-  name: Photography
+I am a teaching instructor for the following courses at University X:
 
-# Uncomment to use emoji icons.
-#- icon: ':smile:'
-#  icon_pack: emoji
-#  name: Emojiness
-#  description: 100% 
+- CS101: An intro to computer science
+- CS102: An intro to computer science
+- CS103: An intro to computer science
+- CS104: An intro to computer science
+- CS105: An intro to computer science
+- CS106: An intro to computer science
+- CS107: An intro to computer science
 
-# Uncomment to use custom SVG icons.
-# Place your custom SVG icon in `assets/media/icons/`.
-# Reference the SVG icon name (without `.svg` extension) in the `icon` field.
-# For example, reference `assets/media/icons/xyz.svg` as `icon: 'xyz'`
-#- icon: your-custom-icon-name
-#  icon_pack: custom
-#  name: Surfing
-#  description: 90%
----
+
