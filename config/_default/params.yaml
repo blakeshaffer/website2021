@@ -5,10 +5,10 @@
 
 # Appearance
 
-theme: minimal
+theme: earth
 day_night: true
-font: ''
-font_size: L
+font: 'minimal'
+font_size: M
 
 # SEO
 
@@ -38,7 +38,7 @@ coordinates:
 contact_links:
   - icon: twitter
     icon_pack: fab
-    name: DM Me
+    name: DM me
     link: 'https://twitter.com/bcshaffer'
 
 # Site header
