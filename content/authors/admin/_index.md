@@ -57,4 +57,7 @@ Prior to returning to academia, I had a 15 year career in energy trading, specia
 My recent research has been published in Nature, American Economic Journal: Economic Policy, Canadian Journal of Economics, Canadian Public Policy, Energy Economics, and the Energy Journal. My popular writing has appeared in the Globe and Mail, Maclean’s, CBC, and other media outlets. I am frequently asked to provide policy advisor services for governments at various levels on energy and environmental policy matters.
 
 
+The American Economic Association encourages its members to openly provide a disclosure statement. Mine can be found {{< staticref "uploads/COI disclosure.pdf" "newtab" >}}here{{< /staticref >}}.
+
+
 {{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/Blake Shaffer current CV.pdf" "newtab" >}}CV{{< /staticref >}}.

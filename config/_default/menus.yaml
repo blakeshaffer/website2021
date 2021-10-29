@@ -10,14 +10,11 @@ main:
   - name: Teaching
     url: '#teaching'
     weight: 20
+  - name: "CV"
+    url: 'uploads/Blake Shaffer current CV.pdf'
+    weight: 30
   - name: Contact
     url: '#contact'
     weight: 40
-  - name: "CV"
-    url: 'uploads/Blake Shaffer current CV.pdf'
-    weight: 70
-  - name: "Disclosure Statement"
-    url: 'uploads/COI disclosure.pdf'
-    weight: 80
     
 
