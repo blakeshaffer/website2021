@@ -7,9 +7,9 @@ widget: pages
 headless: true
 
 # Order that this section appears on the page.
-weight: 23
+weight: 21
 
-title: Peer-reviewed policy papers and reports
+title: Journal articles (outside energy and economics)
 subtitle: ''
 
 content:
@@ -25,7 +25,7 @@ content:
   filters:
     tag: ''
     category: ''
-    publication_type: '4'
+    publication_type: '7'
     author: ''
     exclude_featured: true
 design:
