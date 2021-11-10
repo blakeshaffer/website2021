@@ -5,12 +5,28 @@
     <link>https://blakeshaffer.ca/publication/</link>
       <atom:link href="https://blakeshaffer.ca/publication/index.xml" rel="self" type="application/rss+xml" />
     <description>Publications</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© Blake Shaffer 2021</copyright><lastBuildDate>Wed, 03 Nov 2021 00:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© Blake Shaffer 2021</copyright><lastBuildDate>Tue, 09 Nov 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://blakeshaffer.ca/media/icon_hucbd076c3177df019c50b843f17be2ee3_61142_512x512_fill_lanczos_center_3.png</url>
       <title>Publications</title>
       <link>https://blakeshaffer.ca/publication/</link>
     </image>
+    
+    <item>
+      <title>A multiple account benefit-cost analysis of coal mining in Alberta</title>
+      <link>https://blakeshaffer.ca/publication/spp_coal_2021/</link>
+      <pubDate>Tue, 09 Nov 2021 00:00:00 +0000</pubDate>
+      <guid>https://blakeshaffer.ca/publication/spp_coal_2021/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Characterization of non-adopters of COVID-19 non-pharmaceutical interventions through a national cross-sectional survey to assess attitudes and behaviours</title>
+      <link>https://blakeshaffer.ca/publication/scirep2021/</link>
+      <pubDate>Thu, 04 Nov 2021 00:00:00 +0000</pubDate>
+      <guid>https://blakeshaffer.ca/publication/scirep2021/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>The role of hydrogen in Canada&#39;s transition to net-zero emissions</title>
