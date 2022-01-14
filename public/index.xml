@@ -5,7 +5,7 @@
     <link>https://blakeshaffer.ca/</link>
       <atom:link href="https://blakeshaffer.ca/index.xml" rel="self" type="application/rss+xml" />
     <description>Blake Shaffer</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© Blake Shaffer 2021</copyright><lastBuildDate>Sat, 01 Jun 2030 13:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© Blake Shaffer 2022</copyright><lastBuildDate>Sat, 01 Jun 2030 13:00:00 +0000</lastBuildDate>
     <image>
       <url>https://blakeshaffer.ca/media/icon_hucbd076c3177df019c50b843f17be2ee3_61142_512x512_fill_lanczos_center_3.png</url>
       <title>Blake Shaffer</title>
@@ -125,6 +125,14 @@ The variance of the distribution is $\sigma^{2}$.
 &lt;/ul&gt;
 &lt;p&gt;Further event details, including &lt;a href=&#34;https://wowchemy.com/docs/writing-markdown-latex/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;page elements&lt;/a&gt; such as image galleries, can be added to the body of this page.&lt;/p&gt;
 </description>
+    </item>
+    
+    <item>
+      <title>COVID-19 Vaccine–Related Attitudes and Beliefs in Canada: National Cross-sectional Survey and Cluster Analysis</title>
+      <link>https://blakeshaffer.ca/publication/jmir2021/</link>
+      <pubDate>Sat, 04 Dec 2021 00:00:00 +0000</pubDate>
+      <guid>https://blakeshaffer.ca/publication/jmir2021/</guid>
+      <description></description>
     </item>
     
     <item>
@@ -402,7 +410,7 @@ data.head()
 &lt;p&gt;Demo:&lt;/p&gt;
 
 
-&lt;div id=&#34;chart-635248917&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-753462981&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   (function() {
     let a = setInterval( function() {
@@ -412,7 +420,7 @@ data.head()
       clearInterval( a );
 
       Plotly.d3.json(&#34;./line-chart.json&#34;, function(chart) {
-        Plotly.plot(&#39;chart-635248917&#39;, chart.data, chart.layout, {responsive: true});
+        Plotly.plot(&#39;chart-753462981&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
