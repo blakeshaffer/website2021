@@ -36,7 +36,7 @@ design:
   #   4 = Citation (publication only)
   view: 4
 ---
-- <a href="https://policyoptions.irpp.org/magazines/january-2022/building-on-canadas-electrical-advantage/" target="blank">Building on Canada's electrical advantage</a>, Policy Options, IRPP, Jan 14, 2022 (with Jason Dion)
+* <a href="https://policyoptions.irpp.org/magazines/january-2022/building-on-canadas-electrical-advantage/" target="blank">Building on Canada's electrical advantage</a>, Policy Options, IRPP, Jan 14, 2022 (with Jason Dion)
 
 - <a href="https://energyathaas.wordpress.com/2021/10/25/dead-weight-loss/" target="blank">Dead Weight Loss</a>, UC Berkeley Energy Institute Blog, Oct 26, 2021 (with Maximilian Auffhammer)
 
