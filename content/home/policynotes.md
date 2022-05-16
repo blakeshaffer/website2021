@@ -36,7 +36,7 @@ design:
   #   4 = Citation (publication only)
   view: 4
 ---
-- <a href="https://www.policyschool.ca/wp-content/uploads/2022/04/EEP_Power_Prices_april.pdf" target="blank">Why are power prices so darn high?</a>, School of Public Policy, Energy & Environmental Policy Trends, Apr 20, 2022 (with Sara Hastings-Simon)
+- <a href="https://www.policyschool.ca/wp-content/uploads/2022/04/EEP_Power_Prices_april.pdf" target="blank">Why are power prices so darn high?</a>, School of Public Policy, Energy & Environmental Policy Trends, Apr 20, 2022 (with David Brown and Andrew Eckert)
 
 * <a href="https://policyoptions.irpp.org/magazines/january-2022/building-on-canadas-electrical-advantage/" target="blank">Building on Canada's electrical advantage</a>, Policy Options, IRPP, Jan 14, 2022 (with Jason Dion)
 
