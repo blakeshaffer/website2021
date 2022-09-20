@@ -36,6 +36,8 @@ design:
   #   4 = Citation (publication only)
   view: 4
 ---
+* <a href="https://www.theglobeandmail.com/opinion/article-removing-policy-uncertainty-can-position-canada-for-a-decarbonizing/" target="blank">Removing policy uncertainty can position Canada for a decarbonizing world</a>, Globe and Mail, June 2, 2022 (with Dale Beugin)
+
 - <a href="https://www.cbc.ca/news/canada/calgary/opinion-alberta-end-coal-power-natural-gas-solar-wind-nuclear-1.6300606" target="blank">Alberta steps closer to ending coal power, faster than many expected. But then comes the hard part</a>, CBC, Dec 30, 2021
 
 * <a href="https://www.theglobeandmail.com/opinion/article-if-you-got-an-astrazeneca-covid-19-vaccine-you-made-the-right-decision/" target="blank">If you got an AstraZeneca COVID-19 vaccine, you made the right decision, according to economics</a>, Globe and Mail, May 12, 2021 (with Stephen Gordon, Andrew Leach, Christine Neill, Tammy Schirle and Trevor Tombe)
