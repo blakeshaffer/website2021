@@ -1,12 +1,10 @@
 ---
-abstract: "Closing the Carbon-Pricing Certainty Gap"
+abstract: "The price of power: Comparative electricity costs across provinces"
 authors:
 - admin
-- Jason Clark
-- Michael Bernstein
-- Dale Beugin
-- Jake Wadland
-date: "2022-10-12T00:00:00Z"
+- Grant Bishop
+- Mariam Ragab
+date: "2020-10-03T00:00:00Z"
 doi: ""
 featured: false
 image:
@@ -14,20 +12,20 @@ image:
   focal_point: ""
   preview_only: false
 projects: []
-publication: '*Clean Prosperity*'
-publication_short: "Clean Prosperity"
+publication: '*C.D. Howe Institute* 582'
+publication_short: "C.D. Howe Institute"
 publication_types:
 - "4"
-publishDate: "2022-10-12T00:00:00Z"
+publishDate: "2020-10-03T00:00:00Z"
 slides:
-summary: "Closing the Carbon-Pricing Certainty Gap"
+summary: "The price of power: Comparative electricity costs across provinces"
 tags:
-- Power prices
-- Rate design
-title: "Closing the Carbon-Pricing Certainty Gap"
+- electricity
+- retail rates
+title: "The price of power: Comparative electricity costs across provinces"
 url_code: ""
 url_dataset: ""
-url_pdf: "https://cleanprosperity.ca/wp-content/uploads/2022/10/Closing_the_Carbon-Pricing_Certainty_Gap.pdf"
+url_pdf: "https://www.cdhowe.org/sites/default/files/2021-12/Commentary%20582.pdf"
 url_preprint: ""
 url_poster: ""
 url_project: ""
