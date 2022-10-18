@@ -5,12 +5,20 @@
     <link>https://blakeshaffer.ca/publication/</link>
       <atom:link href="https://blakeshaffer.ca/publication/index.xml" rel="self" type="application/rss+xml" />
     <description>Publications</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© Blake Shaffer 2022</copyright><lastBuildDate>Tue, 15 Feb 2022 00:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© Blake Shaffer 2022</copyright><lastBuildDate>Wed, 12 Oct 2022 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://blakeshaffer.ca/media/icon_hucbd076c3177df019c50b843f17be2ee3_61142_512x512_fill_lanczos_center_3.png</url>
       <title>Publications</title>
       <link>https://blakeshaffer.ca/publication/</link>
     </image>
+    
+    <item>
+      <title>Closing the Carbon-Pricing Certainty Gap</title>
+      <link>https://blakeshaffer.ca/publication/cdhowe_power_2020/</link>
+      <pubDate>Wed, 12 Oct 2022 00:00:00 +0000</pubDate>
+      <guid>https://blakeshaffer.ca/publication/cdhowe_power_2020/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Changing sensitivity to cold weather in Texas power demand</title>
@@ -85,6 +93,14 @@
     </item>
     
     <item>
+      <title>Technical pathways to aligning Canadian electricity systems with net zero goals</title>
+      <link>https://blakeshaffer.ca/publication/cleanprosperity2022/</link>
+      <pubDate>Sun, 03 Oct 2021 00:00:00 +0000</pubDate>
+      <guid>https://blakeshaffer.ca/publication/cleanprosperity2022/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Attitudes, behaviours and barriers to public health measures for COVID-19: a survey to inform public health messaging</title>
       <link>https://blakeshaffer.ca/publication/bmc2021/</link>
       <pubDate>Wed, 21 Apr 2021 00:00:00 +0000</pubDate>
@@ -97,14 +113,6 @@
       <link>https://blakeshaffer.ca/publication/riversshafferej2020/</link>
       <pubDate>Sun, 01 Nov 2020 00:00:00 +0000</pubDate>
       <guid>https://blakeshaffer.ca/publication/riversshafferej2020/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>The Price of Power: Comparative Electricity Costs across Provinces</title>
-      <link>https://blakeshaffer.ca/publication/cdhowe_power_2020/</link>
-      <pubDate>Wed, 28 Oct 2020 00:00:00 +0000</pubDate>
-      <guid>https://blakeshaffer.ca/publication/cdhowe_power_2020/</guid>
       <description></description>
     </item>
     
