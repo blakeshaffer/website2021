@@ -11,7 +11,7 @@
 
 
 
-<title>Introduction to R for Energy Data</title>
+<title>Assignment 1</title>
 
 <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="site_libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
@@ -247,6 +247,9 @@ $(document).ready(function () {
 <li>
   <a href="assignment1.html">Assignment 1</a>
 </li>
+<li>
+  <a href="assignment2.html">Assignment 2</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -259,91 +262,12 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Introduction to R for Energy Data</h1>
+<h1 class="title toc-ignore">Assignment 1</h1>
 
 </div>
 
 
-<p><strong>Hello class!</strong></p>
-<p>To start our adventure in <em>R</em>, let’s start by loading the
-required software software:</p>
-<ul>
-<li><a href="https://cloud.r-project.org/">Download R</a></li>
-<li><a href="http://www.rstudio.com/download">Download RStudio</a></li>
-</ul>
-<p>Once you’ve done that, you want to go to RStudio and select:</p>
-<ul>
-<li>File &gt; New File &gt; RScript</li>
-</ul>
-<p>You should now have a blank source pane in which to start
-writing!</p>
-<p>Start by installing and loading packages. While R has base abilities,
-adding packages made by the myriad of users is what makes R so
-versatile. Let’s add the <code>tidyverse</code> to start, it’s a
-collection of important packages made by the people at RStudio. We
-should also add <code>readxl</code> because we are going to read in an
-excel file.</p>
-<pre class="r"><code>#install.packages(&quot;tidyverse&quot;)  #this installs the package (remove the hashtag to uncomment and run this line the first time you run it)
-#install.packages(&quot;readxl&quot;)  #this installs the package (remove the hashtag to uncomment and run this line the first time you run it)
-library(tidyverse)  #this loads the installed package
-library(readxl)  #this loads the installed package</code></pre>
-<p>Next, lets load in some simple data just to play around.</p>
-<p>We will start by downloading a file from the AESO’s Data Requests
-page (a treasure trove of great data sets!). Once that is downloaded, we
-will read it into R as a dataframe object called <code>data</code>:</p>
-<pre class="r"><code>download.file(&quot;https://aeso.ca/assets/Uploads/data-requests/System-Load-Annual-2009-to-2022.xlsx&quot;,
-              destfile=&quot;annual_load.xlsx&quot;,
-              mode=&quot;wb&quot;)
-data &lt;- read_xlsx(&quot;annual_load.xlsx&quot;)</code></pre>
-<p>Let’s take a peak at this data object:</p>
-<pre class="r"><code>head(data)</code></pre>
-<pre><code>## # A tibble: 6 × 3
-##    Year `System Load (GWh)` ...3 
-##   &lt;dbl&gt;               &lt;dbl&gt; &lt;chr&gt;
-## 1  2009               56358 &lt;NA&gt; 
-## 2  2010               57377 &lt;NA&gt; 
-## 3  2011               58681 &lt;NA&gt; 
-## 4  2012               59004 &lt;NA&gt; 
-## 5  2013               60480 &lt;NA&gt; 
-## 6  2014               62479 &lt;NA&gt;</code></pre>
-<p>Ok! We have data! But there’s a weird third column and i don’t like
-the variable names. Let’s delete the 3rd column and rename the first
-two. To do that we will create a new dataframe called <code>df</code>
-and use the <code>tidyverse</code> to make some changes:</p>
-<pre class="r"><code>df &lt;- data %&gt;%   #assign data to a new object called df and then (%&gt;%)...
-  select(-3)  %&gt;% #select all columns that are NOT column 3 and then (%&gt;%)...
-  rename(year=Year,load=`System Load (GWh)`)  #rename the columns; note the backticks, that&#39;s how you deal with variable names that have spaces.
-head(df)  #let&#39;s peek at the first few rows of this new object</code></pre>
-<pre><code>## # A tibble: 6 × 2
-##    year  load
-##   &lt;dbl&gt; &lt;dbl&gt;
-## 1  2009 56358
-## 2  2010 57377
-## 3  2011 58681
-## 4  2012 59004
-## 5  2013 60480
-## 6  2014 62479</code></pre>
-<p>Much nicer!</p>
-<p>Now let’s explore the data using a quick chart. Let’s plot the annual
-system load by year.</p>
-<pre class="r"><code>ggplot(df,aes(x=year,y=load))+  #we are creating a plot using the dataframe `df` and the aesthetics will involve year on the x-axis and load on the y-axis
-  geom_line()  #plot a line using the aesthetics assigned above (note we could have assigned them here as well)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
-Not bad! Our first chart!</p>
-<pre class="r"><code>ggplot(df,aes(year,load,label=load))+
-  geom_col(fill=&quot;firebrick&quot;,alpha=.8)+
-  geom_text(vjust=1.1,size=3,color=&quot;white&quot;)+
-  scale_x_continuous(breaks=seq(2009,2022,1))+
-  scale_y_continuous(limits=c(0,75000),expand=c(0,0))+
-  labs(x=&quot;&quot;,y=&quot;&quot;,
-       title=&quot;Alberta&#39;s Annual System Load&quot;,
-       subtitle=&quot;Annual GWh&quot;,
-       caption=&quot;Source: AESO.ca data; Chart by Blake&quot;)+
-  theme_light(14)+
-  theme(panel.grid.minor=element_blank(),
-        panel.grid.major.x=element_blank(),
-        axis.text.x=element_text(angle=90))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Here I will add the details for assignment 1.</p>
 
 
 
