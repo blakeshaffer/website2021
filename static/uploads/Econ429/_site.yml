@@ -1,0 +1,8 @@
+name: "Econ 429"
+navbar:
+  title: "Econ 429 Data Assignments"
+  left:
+    - text: "Introduction to R"
+      href: index.html
+    - text: "Assignment 1"
+      href: assignment1.html

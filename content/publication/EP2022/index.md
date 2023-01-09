@@ -4,7 +4,7 @@ authors:
 - admin
 - Sara Hastings-Simon
 - Andrew Leach
-- Time Weis
+- Tim Weis
 date: "2022-10-01T00:00:00Z"
 doi: ""
 featured: false
