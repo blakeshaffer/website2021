@@ -17,7 +17,7 @@ weight = 40
 
 This academic year I am teaching: 
 
-- [ECON 429]("https://www.blakeshaffer.ca/uploads/econ429/index.html"): Advanced Economics of Electricity Markets (Undergraduate), Winter 2023
+- [ECON 429](uploads/econ429/index.html): Advanced Economics of Electricity Markets (Undergraduate), Winter 2023
 - ECON 557: Advanced Microeconomic Theory (Undergraduate), Fall 2022
 - PPOL 623: MPP Capstone course (Masters), Fall 2022/Winter 2023 with Dr. Kent Fellows
 
