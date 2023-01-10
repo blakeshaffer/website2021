@@ -491,7 +491,7 @@ system load by year.</p>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()  <span class="co">#plot a line using the aesthetics assigned above (note we could have assigned them here as well)</span></span></code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Not bad! Our first chart!</p>
-<p>Now let’s make it look a little nicer…</p>
+<p>Now let’s try a nicer looking version. Maybe a bar chart…</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df,<span class="fu">aes</span>(year,load,<span class="at">label=</span>load))<span class="sc">+</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill=</span><span class="st">&quot;firebrick&quot;</span>,<span class="at">alpha=</span>.<span class="dv">8</span>)<span class="sc">+</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">vjust=</span><span class="fl">1.1</span>,<span class="at">size=</span><span class="fl">2.5</span>,<span class="at">fontface=</span><span class="st">&quot;bold&quot;</span>,<span class="at">color=</span><span class="st">&quot;white&quot;</span>)<span class="sc">+</span></span>
@@ -506,6 +506,34 @@ system load by year.</p>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.x=</span><span class="fu">element_blank</span>(),</span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">90</span>))</span></code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><strong>Now it’s your turn!</strong></p>
+<p>For this initial exercise, I want you to do two things:</p>
+<ol style="list-style-type: decimal">
+<li><p>Create your own time series chart using the data above. Use the
+principles of good data visualization to create a clear chart that
+easily conveys the data to the viewer. You may want to explore the
+<code>ggthemes</code> package, which has some nice preset themes to
+change the appearance of the chart. A great resource for good data
+visualization (IMHO) is Claus Wilke’s (free) e-book <a
+href="https://clauswilke.com/dataviz/">Fundamentals of Data
+Visualization</a>. Along with your new time series chart, make a note of
+a principle you’ve taken from the book in making your chart.</p></li>
+<li><p>There aren’t too many ways to slice and dice this simple dataset,
+but how about a time series of <strong>annual percentage
+changes</strong>. Some tips to get you started on doing that:</p></li>
+</ol>
+<ul>
+<li>To create a new variable, the tidyverse has the <code>mutate</code>
+command. For example
+<code>df &lt;- df %&gt;% mutate(double_load = 2 x load)</code> would
+update the <code>df</code> dataframe with a newly created variable
+<code>double_load</code> with, you guessed it, twice the value of the
+old <code>load</code> variable.</li>
+<li>In this case, you need to calculate the difference from one year to
+the next. A tip is to do a quick search on R’s <code>lag</code> function
+that is part of the tidyverse’s <code>dplyr</code> package (no need to
+load this package; it is part of the <code>tidyverse</code>)</li>
+</ul>
 
 
 
