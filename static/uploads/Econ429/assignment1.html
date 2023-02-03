@@ -575,6 +575,164 @@ code. Bonus points for making your charts look nice. Pretend you’re
 publishing them somewhere for public consumption! (hint:
 <code>ggthemes</code> offers a nice set of canned themes…)</strong></p>
 </div>
+<div id="task-2-merit-order-data" class="section level1">
+<h1>Task 2: Merit Order data</h1>
+<p>Now i want you to pull some historical merit order data to plot the
+supply curve (merit order) for various hours, for various companies, and
+for various assets.</p>
+<p>Let’s start by pulling the data for a random day, let’s go with
+<code>2022-08-06</code> as our day:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>get_merit <span class="ot">&lt;-</span> <span class="cf">function</span>(start_date,end_date,aeso_key){</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">GET</span>(<span class="at">url=</span><span class="st">&quot;https://api.aeso.ca/report/v1/meritOrder/energy&quot;</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">add_headers</span>(<span class="st">&quot;X-API-Key&quot;</span> <span class="ot">=</span> aeso_key),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">query =</span> <span class="fu">list</span>(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">startDate =</span> <span class="fu">format</span>(start_date, <span class="st">&quot;%Y-%m-%d&quot;</span>),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">endDate =</span> <span class="fu">format</span>(end_date, <span class="st">&quot;%Y-%m-%d&quot;</span>),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">contentType =</span> <span class="st">&quot;application/json&quot;</span>))</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">fromJSON</span>(<span class="fu">rawToChar</span>(data<span class="sc">$</span>content)))</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(data)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>start_date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">&quot;2022-08-06&quot;</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>end_date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">&quot;2022-08-06&quot;</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>meritOrder <span class="ot">&lt;-</span> <span class="fu">get_merit</span>(start_date,end_date,aeso_key)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>meritOrder <span class="ot">&lt;-</span> <span class="fu">unnest</span>(meritOrder, <span class="at">cols =</span> <span class="fu">c</span>(return.data.energy_blocks))</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(meritOrder)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 16
+##   timestamp      responseCode return.data.beg… return.data.beg… import_or_export
+##   &lt;fct&gt;          &lt;fct&gt;        &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
+## 1 2023-02-03 16… 200          2022-08-06 06:00 2022-08-06 00:00 &quot;&quot;              
+## 2 2023-02-03 16… 200          2022-08-06 06:00 2022-08-06 00:00 &quot;&quot;              
+## 3 2023-02-03 16… 200          2022-08-06 06:00 2022-08-06 00:00 &quot;&quot;              
+## 4 2023-02-03 16… 200          2022-08-06 06:00 2022-08-06 00:00 &quot;&quot;              
+## 5 2023-02-03 16… 200          2022-08-06 06:00 2022-08-06 00:00 &quot;&quot;              
+## 6 2023-02-03 16… 200          2022-08-06 06:00 2022-08-06 00:00 &quot;&quot;              
+## # … with 11 more variables: asset_ID &lt;chr&gt;, block_number &lt;int&gt;,
+## #   block_price &lt;chr&gt;, from_MW &lt;int&gt;, to_MW &lt;int&gt;, block_size &lt;int&gt;,
+## #   available_MW &lt;int&gt;, `dispatched?` &lt;chr&gt;, dispatched_MW &lt;int&gt;,
+## #   `flexible?` &lt;chr&gt;, offer_control &lt;chr&gt;</code></pre>
+<p>Now you should have a dataframe to work with thanks to Mallika’s
+smart use of the <code>unnest</code> command.</p>
+<p>Let’s clean it up a bit by renaming some variables we will want to
+work with.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>meritOrder <span class="ot">&lt;-</span> meritOrder <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">time=</span>return.data.begin_dateTime_mpt,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">MW=</span>available_MW,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">price=</span>block_price)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(meritOrder)</span></code></pre></div>
+<pre><code>## tibble [5,362 × 16] (S3: tbl_df/tbl/data.frame)
+##  $ timestamp                     : Factor w/ 1 level &quot;2023-02-03 16:43:38.633+0000&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ responseCode                  : Factor w/ 1 level &quot;200&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ return.data.begin_dateTime_utc: chr [1:5362] &quot;2022-08-06 06:00&quot; &quot;2022-08-06 06:00&quot; &quot;2022-08-06 06:00&quot; &quot;2022-08-06 06:00&quot; ...
+##  $ time                          : chr [1:5362] &quot;2022-08-06 00:00&quot; &quot;2022-08-06 00:00&quot; &quot;2022-08-06 00:00&quot; &quot;2022-08-06 00:00&quot; ...
+##  $ import_or_export              : chr [1:5362] &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
+##  $ asset_ID                      : chr [1:5362] &quot;ME04&quot; &quot;BHL1&quot; &quot;COD1&quot; &quot;ICP1&quot; ...
+##  $ block_number                  : int [1:5362] 1 1 1 1 1 1 1 1 1 6 ...
+##  $ price                         : chr [1:5362] &quot;999.99&quot; &quot;999.99&quot; &quot;999.99&quot; &quot;999.99&quot; ...
+##  $ from_MW                       : int [1:5362] 4 3 3 4 4 18 3 4 4 49 ...
+##  $ to_MW                         : int [1:5362] 6 5 5 7 7 21 6 7 8 54 ...
+##  $ block_size                    : int [1:5362] 2 2 2 3 3 3 3 3 4 5 ...
+##  $ MW                            : int [1:5362] 2 2 2 3 3 3 3 3 4 0 ...
+##  $ dispatched?                   : chr [1:5362] &quot;N&quot; &quot;N&quot; &quot;N&quot; &quot;N&quot; ...
+##  $ dispatched_MW                 : int [1:5362] 0 0 0 0 0 0 0 0 0 0 ...
+##  $ flexible?                     : chr [1:5362] &quot;Y&quot; &quot;Y&quot; &quot;Y&quot; &quot;N&quot; ...
+##  $ offer_control                 : chr [1:5362] &quot;URICA Asset Optimization Ltd.&quot; &quot;URICA Asset Optimization Ltd.&quot; &quot;Signalta Resources Limited&quot; &quot;URICA Asset Optimization Ltd.&quot; ...</code></pre>
+<p>Better. But we have our familiar data class issue. Price is a
+character. That’s no good! So is our time variable.</p>
+<p>I want you to do three things now: 1. Convert price and MW to numeric
+variables (remember your <code>mutate</code>). 2. Convert time to a
+POSIXct variable (<code>ymd_hm</code> is your friend) 3. Create a new
+<code>hour</code> variable using <code>hour</code> function on your time
+variable 4. I lied. 4 things. I also want you to <code>filter</code> out
+all the imports and exports. They are marked with either an
+<code>I</code> or <code>E</code> in the <code>import_or_export</code>
+column.</p>
+<p>When done, it should look like this:</p>
+<pre><code>## tibble [5,250 × 17] (S3: tbl_df/tbl/data.frame)
+##  $ timestamp                     : Factor w/ 1 level &quot;2023-02-03 16:43:38.633+0000&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ responseCode                  : Factor w/ 1 level &quot;200&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ return.data.begin_dateTime_utc: chr [1:5250] &quot;2022-08-06 06:00&quot; &quot;2022-08-06 06:00&quot; &quot;2022-08-06 06:00&quot; &quot;2022-08-06 06:00&quot; ...
+##  $ time                          : POSIXct[1:5250], format: &quot;2022-08-06 00:00:00&quot; &quot;2022-08-06 00:00:00&quot; ...
+##  $ import_or_export              : chr [1:5250] &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
+##  $ asset_ID                      : chr [1:5250] &quot;ME04&quot; &quot;BHL1&quot; &quot;COD1&quot; &quot;ICP1&quot; ...
+##  $ block_number                  : int [1:5250] 1 1 1 1 1 1 1 1 1 6 ...
+##  $ price                         : num [1:5250] 1000 1000 1000 1000 1000 ...
+##  $ from_MW                       : int [1:5250] 4 3 3 4 4 18 3 4 4 49 ...
+##  $ to_MW                         : int [1:5250] 6 5 5 7 7 21 6 7 8 54 ...
+##  $ block_size                    : int [1:5250] 2 2 2 3 3 3 3 3 4 5 ...
+##  $ MW                            : num [1:5250] 2 2 2 3 3 3 3 3 4 0 ...
+##  $ dispatched?                   : chr [1:5250] &quot;N&quot; &quot;N&quot; &quot;N&quot; &quot;N&quot; ...
+##  $ dispatched_MW                 : int [1:5250] 0 0 0 0 0 0 0 0 0 0 ...
+##  $ flexible?                     : chr [1:5250] &quot;Y&quot; &quot;Y&quot; &quot;Y&quot; &quot;N&quot; ...
+##  $ offer_control                 : chr [1:5250] &quot;URICA Asset Optimization Ltd.&quot; &quot;URICA Asset Optimization Ltd.&quot; &quot;Signalta Resources Limited&quot; &quot;URICA Asset Optimization Ltd.&quot; ...
+##  $ hour                          : int [1:5250] 0 0 0 0 0 0 0 0 0 0 ...</code></pre>
+<p>Good. We can work with this.</p>
+<p>Now we are ready to create our cumulative offer curves. I’m going to
+hide this step because this is where the magic happens. Remember, you’ve
+got a bunch of rows in your dataframe, each of which are for different
+offer blocks, of different assets, on potentially different hours.</p>
+<p>The trick here is to use 3 steps:</p>
+<ol style="list-style-type: decimal">
+<li>First, use the <code>arrange</code> command on your dataframe to
+order the data properly</li>
+<li>Second, use the <code>group_by</code> command to create cumulative
+supply curves <em>by hour</em></li>
+<li>Third, you will need to create a new variable, let’s call it
+<code>cumul_MW</code> that is, no surprise, the cumulative MWs offered
+in that hour.</li>
+</ol>
+<p>Ok, i’ve done that. Once you have, you should be able to plot a merit
+order for a single hour like this. Let’s choose hour beginning
+12:00:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plot 1 hour</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(meritOrder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(hour<span class="sc">==</span><span class="dv">12</span>), <span class="fu">aes</span>(cumul_MW,price))<span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">direction=</span><span class="st">&quot;vh&quot;</span>)<span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_clean</span>()</span></code></pre></div>
+<p><img src="assignment1_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>You might have noticed i used a new plotting command:
+<code>geom_step</code>. How very observant of you. Honestly, for this
+market merit order i could have just done <code>geom_line</code> and it
+would have looked similar to the numerous blocks. But using
+<code>geom_step</code> will be more important when we look at individual
+assets, where the steps are more chunky. We want these plotted as step
+curves, not angled lines connecting points. The
+<code>direction="vh"</code> option tells ggplot i want my steps to go
+vertical then horizontal (the default is horizontal then vertical, which
+we don’t want here)</p>
+<p><strong>Now your tasks</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Produce the single hourly plot i did above.</p></li>
+<li><p>Produce a plot with the <strong>24 hours</strong> of August 6 as
+different lines. I suggest using <code>scale_color_viridis_d</code> as
+your color palette, but that’s up to you. Note: if you just use
+<code>color=hour</code> in your ggplot aesthetics, it will treat
+<code>hour</code> and the colorscale as continuous variables. We don’t
+want that. We want discrete hours. To make that so, use
+<code>color=factor(hour)</code>, which turns the hour variable into 24
+discrete values when plotting.</p></li>
+<li><p>Plot just the merit order for a <strong>single company</strong>,
+also showing all 24 hours as colored lines. I want you to do this for
+each of (a) Transalta, (b) Capital Power, and (c) Heartland Generation.
+You’ll notice they have lots of companies with their names in them. Use
+them all. To help you, check out the <code>str_detect</code> function…
+Note: Once you’ve done a <code>filter</code> on just the company you
+want, you’ll again need to do the <code>arrange</code>
+<code>group_by</code> <code>mutate</code> steps to create your
+cumulative MW variables!</p></li>
+<li><p>Plot just the merit order for a <strong>single asset</strong>,
+again for all 24 hours. I want you to do this for each of (a) Shepard,
+(b) Keephills 3, (c) Sheerness 2, and (d) Sundance 6. Same note applies
+as in (3): you’ll need to recreate your merit orders after filtering on
+each asset again.</p></li>
+</ol>
+<p>As a freebie, here is my plot for the Sheerness 2 merit order:</p>
+<p><img src="assignment1_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>That one is a bit hard to read, so I’ll also show it as a faceted
+graph using <code>facet_wrap(~factor(hour))</code></p>
+<p><img src="assignment1_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Very nice…</p>
+<p>Now it’s your turn. <strong>Go forth and plot!</strong></p>
+</div>
 
 
 
