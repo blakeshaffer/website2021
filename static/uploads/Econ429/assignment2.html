@@ -508,34 +508,22 @@ href="https://aeso.ca/market/market-and-system-reporting/data-requests/historica
 class="uri">https://aeso.ca/market/market-and-system-reporting/data-requests/historical-generation-data/</a>].</p>
 <p>Grab the two files with 2022 data. You’ll need to download the zip
 files, then unzip each to get csv files. Save it in the same folder as
-your R script file and then you should be able to import like i’ve done
-here:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;CSD Generation (Hourly) - 2022-01 to 2022-06.csv&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data2 <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;CSD Generation (Hourly) - 2022-07 to 2022-12.csv&quot;</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(data1,data2)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code></pre></div>
-<pre><code>## # A tibble: 6 × 12
-##   `Date (MST)`        `Date (MPT)`        `Asset Short Name` `Asset Name`      
-##   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;              &lt;chr&gt;             
-## 1 2022-01-01 00:00:00 2022-01-01 00:00:00 AFG1               AFG1 APF Athabasca
-## 2 2022-01-01 01:00:00 2022-01-01 01:00:00 AFG1               AFG1 APF Athabasca
-## 3 2022-01-01 02:00:00 2022-01-01 02:00:00 AFG1               AFG1 APF Athabasca
-## 4 2022-01-01 03:00:00 2022-01-01 03:00:00 AFG1               AFG1 APF Athabasca
-## 5 2022-01-01 04:00:00 2022-01-01 04:00:00 AFG1               AFG1 APF Athabasca
-## 6 2022-01-01 05:00:00 2022-01-01 05:00:00 AFG1               AFG1 APF Athabasca
-## # … with 8 more variables: `Asset Grouping` &lt;chr&gt;, Volume &lt;dbl&gt;,
-## #   `Maximum Capability` &lt;dbl&gt;, `System Capability` &lt;dbl&gt;, `Fuel Type` &lt;chr&gt;,
-## #   `Sub Fuel Type` &lt;chr&gt;, `Planning Area` &lt;dbl&gt;, Region &lt;chr&gt;</code></pre>
-<p>Let’s clean up this file by renaming some variables and rolling up
-the plant-level data to just give us the sum of volume (MW) by fuel type
-in each hour:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.gen <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">datetime=</span><span class="st">`</span><span class="at">Date (MPT)</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(datetime,<span class="st">`</span><span class="at">Fuel Type</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Volume=</span><span class="fu">sum</span>(Volume))</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df.gen)</span></code></pre></div>
+your R script file and then you should be able to import it as two files
+and merge them one on top of the other using <code>bind_rows</code>.
+Once you have that, clean it up by renaming <code>Date (MPT)</code> to
+<code>datetime</code> and rolling up the plant-level data to just give
+us the sum of volume (MW) by fuel type in each hour.</p>
+<p>In the end, you should get something like this:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.gen <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;dfgen.csv&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Note: I had to make an intermediary small csv file that fit under my website host&#39;s filesize limit. You&#39;ll be working directly with the AESO data like this:</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#data1 &lt;- readr::read_csv(&quot;CSD Generation (Hourly) - 2022-01 to 2022-06.csv&quot;)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#data2 &lt;- readr::read_csv(&quot;CSD Generation (Hourly) - 2022-07 to 2022-12.csv&quot;)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#df.gen &lt;- bind_rows(data1,data2) %&gt;%</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#rename(datetime=`Date (MPT)`) %&gt;%</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">#group_by(datetime,`Fuel Type`) %&gt;%</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">#summarise(Volume=sum(Volume))</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df.gen)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 3
-## # Groups:   datetime [1]
 ##   datetime            `Fuel Type`     Volume
 ##   &lt;dttm&gt;              &lt;chr&gt;            &lt;dbl&gt;
 ## 1 2022-01-01 00:00:00 COAL           1680.  
@@ -544,36 +532,33 @@ in each hour:</p>
 ## 4 2022-01-01 00:00:00 GAS            7296.  
 ## 5 2022-01-01 00:00:00 HYDRO           111.  
 ## 6 2022-01-01 00:00:00 OTHER           281.</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(df.gen<span class="sc">$</span><span class="st">`</span><span class="at">Fuel Type</span><span class="st">`</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;COAL&quot;           &quot;DUAL FUEL&quot;      &quot;ENERGY STORAGE&quot; &quot;GAS&quot;           
-## [5] &quot;HYDRO&quot;          &quot;OTHER&quot;          &quot;SOLAR&quot;          &quot;WIND&quot;</code></pre>
 <p>Since we have these data, let’s start by producing a quick chart of
 hourly generation by fuel type like this:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df.gen, <span class="fu">aes</span>(datetime,Volume,<span class="at">color=</span><span class="st">`</span><span class="at">Fuel Type</span><span class="st">`</span>))<span class="sc">+</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span><span class="st">`</span><span class="at">Fuel Type</span><span class="st">`</span>)<span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_colorblind</span>()</span></code></pre></div>
-<p><img src="assignment2_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df.gen, <span class="fu">aes</span>(datetime,Volume,<span class="at">color=</span><span class="st">`</span><span class="at">Fuel Type</span><span class="st">`</span>))<span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span><span class="st">`</span><span class="at">Fuel Type</span><span class="st">`</span>)<span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_colorblind</span>()</span></code></pre></div>
+<p><img src="assignment2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>I see some weirdness in the data. That spike in GAS to 14000 MW
 doesn’t make sense. It looks like the AESO has an issue on Nov 6 at 1am.
 Let’s delete that hour and replot:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df.gen <span class="ot">&lt;-</span> df.gen <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(datetime<span class="sc">!=</span><span class="fu">ymd_hm</span>(<span class="st">&quot;2022-11-06 01:00&quot;</span>))</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df.gen, <span class="fu">aes</span>(datetime,Volume,<span class="at">color=</span><span class="st">`</span><span class="at">Fuel Type</span><span class="st">`</span>))<span class="sc">+</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span><span class="st">`</span><span class="at">Fuel Type</span><span class="st">`</span>)<span class="sc">+</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_colorblind</span>()</span></code></pre></div>
-<p><img src="assignment2_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df.gen <span class="ot">&lt;-</span> df.gen <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(datetime<span class="sc">!=</span><span class="fu">ymd_hm</span>(<span class="st">&quot;2022-11-06 01:00&quot;</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df.gen, <span class="fu">aes</span>(datetime,Volume,<span class="at">color=</span><span class="st">`</span><span class="at">Fuel Type</span><span class="st">`</span>))<span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span><span class="st">`</span><span class="at">Fuel Type</span><span class="st">`</span>)<span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_colorblind</span>()</span></code></pre></div>
+<p><img src="assignment2_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>Better. To see the variation better we could let the scales differ
 for each facet. Note: this needs to be done judiciously, as you lose the
 perspective on different generation levels across fuel types. This
 should only be done if the focus is on shape or variation, not
 levels.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df.gen, <span class="fu">aes</span>(datetime,Volume,<span class="at">color=</span><span class="st">`</span><span class="at">Fuel Type</span><span class="st">`</span>))<span class="sc">+</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span><span class="st">`</span><span class="at">Fuel Type</span><span class="st">`</span>,<span class="at">scales=</span><span class="st">&quot;free_y&quot;</span>)<span class="sc">+</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_colorblind</span>()</span></code></pre></div>
-<p><img src="assignment2_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df.gen, <span class="fu">aes</span>(datetime,Volume,<span class="at">color=</span><span class="st">`</span><span class="at">Fuel Type</span><span class="st">`</span>))<span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span><span class="st">`</span><span class="at">Fuel Type</span><span class="st">`</span>,<span class="at">scales=</span><span class="st">&quot;free_y&quot;</span>)<span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_colorblind</span>()</span></code></pre></div>
+<p><img src="assignment2_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Ok! Now we’re ready for the task at hand:</p>
 <ol style="list-style-type: lower-alpha">
 <li>Plot the net load duration curve and regular (gross) load duration
@@ -585,13 +570,13 @@ values and another for the net load. I’ll let you figure that out, but
 your final ggplot should look something like this, where the aesthetics
 are in the <code>geom_line()</code> call:</li>
 </ol>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df.duration.net)<span class="sc">+</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>order,<span class="at">y=</span>load,<span class="at">color=</span><span class="st">&quot;load&quot;</span>),<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>net.order,<span class="at">y=</span>net.load,<span class="at">color=</span><span class="st">&quot;net load&quot;</span>),<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_colorblind</span>(<span class="at">name=</span><span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;MWh&quot;</span>,<span class="at">x=</span><span class="st">&quot;Hour&quot;</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">&quot;Load duration curve for Alberta (2022)&quot;</span>)</span></code></pre></div>
-<p><img src="assignment2_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df.duration.net)<span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>order,<span class="at">y=</span>load,<span class="at">color=</span><span class="st">&quot;load&quot;</span>),<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>net.order,<span class="at">y=</span>net.load,<span class="at">color=</span><span class="st">&quot;net load&quot;</span>),<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_colorblind</span>(<span class="at">name=</span><span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;MWh&quot;</span>,<span class="at">x=</span><span class="st">&quot;Hour&quot;</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">&quot;Load duration curve for Alberta (2022)&quot;</span>)</span></code></pre></div>
+<p><img src="assignment2_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Next, answer the question: what would the load duration curve look
 like if there had been <strong>twice</strong> the renewable generation
@@ -600,14 +585,14 @@ hour and subtracting this hypothetical <em>2x VRE</em> value from
 observed load.</li>
 </ol>
 <p>Your plot should now look like this:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df.duration.net)<span class="sc">+</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>order,<span class="at">y=</span>load,<span class="at">color=</span><span class="st">&quot;load&quot;</span>),<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>net.order,<span class="at">y=</span>net.load,<span class="at">color=</span><span class="st">&quot;net load&quot;</span>),<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>net.order<span class="fl">.2</span>x,<span class="at">y=</span>net.load<span class="fl">.2</span>x,<span class="at">color=</span><span class="st">&quot;net load (2x VRE)&quot;</span>),<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_colorblind</span>(<span class="at">name=</span><span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;MWh&quot;</span>,<span class="at">x=</span><span class="st">&quot;Hours in year&quot;</span>,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">&quot;Load duration curve for Alberta (2022)&quot;</span>)</span></code></pre></div>
-<p><img src="assignment2_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df.duration.net)<span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>order,<span class="at">y=</span>load,<span class="at">color=</span><span class="st">&quot;load&quot;</span>),<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>net.order,<span class="at">y=</span>net.load,<span class="at">color=</span><span class="st">&quot;net load&quot;</span>),<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>net.order<span class="fl">.2</span>x,<span class="at">y=</span>net.load<span class="fl">.2</span>x,<span class="at">color=</span><span class="st">&quot;net load (2x VRE)&quot;</span>),<span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_colorblind</span>(<span class="at">name=</span><span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;MWh&quot;</span>,<span class="at">x=</span><span class="st">&quot;Hours in year&quot;</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">&quot;Load duration curve for Alberta (2022)&quot;</span>)</span></code></pre></div>
+<p><img src="assignment2_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>What multiple of 2022 renewable generation would have been required
 for the net load to have gone <em>negative</em> in at least some hours?
@@ -615,36 +600,37 @@ Do this by plotting more and more multiples (e.g. 2x, 3x, etc…) until
 you see the net load by negative. <strong>What options should Alberta
 consider to deal with such a situation?</strong></li>
 </ol>
-<div id="task-3-gen-and-price-data" class="section level2">
-<h2>Task 3: Gen and Price data</h2>
+</div>
+<div id="task-3-gen-and-price-data" class="section level1">
+<h1>Task 3: Gen and Price data</h1>
 <p>For this final task, I want you to explore the relationship between
 hourly generation and hourly prices, by fuel type.</p>
 <p>To do this task, we will need to dig back to our assignment 1 and
 pull in 2022’s hourly prices. You can do this either using the API, or
 getting it manually from the AESO’s market reporting page.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>get_AESO_prices <span class="ot">&lt;-</span> <span class="cf">function</span>(start_date,end_date,aeso_key){</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">GET</span>(<span class="at">url=</span><span class="st">&quot;https://api.aeso.ca/report/v1.1/price/poolPrice&quot;</span>,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">add_headers</span>(<span class="st">&quot;X-API-Key&quot;</span> <span class="ot">=</span> aeso_key),</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">query =</span> <span class="fu">list</span>(</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">startDate =</span> <span class="fu">format</span>(start_date, <span class="st">&quot;%Y-%m-%d&quot;</span>),</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">endDate =</span> <span class="fu">format</span>(end_date, <span class="st">&quot;%Y-%m-%d&quot;</span>),</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">contentType =</span> <span class="st">&quot;application/json&quot;</span>))</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">fromJSON</span>(<span class="fu">rawToChar</span>(data<span class="sc">$</span>content)))</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(data)</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>df.price <span class="ot">&lt;-</span> <span class="fu">get_AESO_prices</span>(<span class="fu">as.Date</span>(<span class="st">&quot;2022-01-01&quot;</span>),<span class="fu">as.Date</span>(<span class="st">&quot;2022-12-31&quot;</span>),aeso_key)</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>df.price <span class="ot">&lt;-</span> df.price <span class="sc">%&gt;%</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">datetime=</span>return.Pool.Price.Report.begin_datetime_mpt,</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">price=</span>return.Pool.Price.Report.pool_price) <span class="sc">%&gt;%</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">datetime=</span><span class="fu">ymd_hm</span>(datetime),</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">price=</span><span class="fu">as.numeric</span>(price))</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>get_AESO_prices <span class="ot">&lt;-</span> <span class="cf">function</span>(start_date,end_date,aeso_key){</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">GET</span>(<span class="at">url=</span><span class="st">&quot;https://api.aeso.ca/report/v1.1/price/poolPrice&quot;</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">add_headers</span>(<span class="st">&quot;X-API-Key&quot;</span> <span class="ot">=</span> aeso_key),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">query =</span> <span class="fu">list</span>(</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">startDate =</span> <span class="fu">format</span>(start_date, <span class="st">&quot;%Y-%m-%d&quot;</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">endDate =</span> <span class="fu">format</span>(end_date, <span class="st">&quot;%Y-%m-%d&quot;</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">contentType =</span> <span class="st">&quot;application/json&quot;</span>))</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">fromJSON</span>(<span class="fu">rawToChar</span>(data<span class="sc">$</span>content)))</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(data)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>df.price <span class="ot">&lt;-</span> <span class="fu">get_AESO_prices</span>(<span class="fu">as.Date</span>(<span class="st">&quot;2022-01-01&quot;</span>),<span class="fu">as.Date</span>(<span class="st">&quot;2022-12-31&quot;</span>),aeso_key)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>df.price <span class="ot">&lt;-</span> df.price <span class="sc">%&gt;%</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">datetime=</span>return.Pool.Price.Report.begin_datetime_mpt,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">price=</span>return.Pool.Price.Report.pool_price) <span class="sc">%&gt;%</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">datetime=</span><span class="fu">ymd_hm</span>(datetime),</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">price=</span><span class="fu">as.numeric</span>(price))</span></code></pre></div>
 <p>Once that is done, merge the price data with the gen data. We will
 also get rid of the ENERGY STORAGE fuel type as it operates primarily in
 the ancillary service markets right now and makes the data a little
 messy for our purposes…</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df.price.gen <span class="ot">&lt;-</span> df.price <span class="sc">%&gt;%</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(df.gen, <span class="at">by=</span><span class="st">&quot;datetime&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Fuel Type</span><span class="st">`</span><span class="sc">!=</span><span class="st">&quot;ENERGY STORAGE&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df.price.gen <span class="ot">&lt;-</span> df.price <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(df.gen, <span class="at">by=</span><span class="st">&quot;datetime&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Fuel Type</span><span class="st">`</span><span class="sc">!=</span><span class="st">&quot;ENERGY STORAGE&quot;</span>)</span></code></pre></div>
 <p>Now for your tasks:</p>
 <ol style="list-style-type: lower-alpha">
 <li>Start by simply plotting hourly generation (x-axis) against hourly
@@ -652,7 +638,7 @@ price (y-axis) by fuel type (<code>facet_wrap(~</code>Fuel
 Type<code>)</code>). It should look something like this. I’ve chosen to
 let the scales differ so you can see the relationships better.</li>
 </ol>
-<p><img src="assignment2_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="assignment2_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Now i want you to calculate the <strong>generation-weighted
 price</strong> for each fuel type. That is, calculate the sum of hourly
@@ -662,9 +648,8 @@ generation-weighted price to the simple average price for 2022. This
 should give you a premium (&gt;100%) or discount (&lt;100%) for each
 fuel type. Your final plot should look something like this:</li>
 </ol>
-<p><img src="assignment2_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="assignment2_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p><strong>Good luck!</strong></p>
-</div>
 </div>
 
 
