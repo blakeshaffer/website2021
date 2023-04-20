@@ -36,6 +36,8 @@ design:
   #   4 = Citation (publication only)
   view: 4
 ---
+* <a href="https://www.policyschool.ca/wp-content/uploads/2023/03/EFL-policy-trends-March.pdf" target="blank">The regulated rate option trap</a>, School of Public Policy, Energy & Environmental Policy Trends, March 2023 (with Sara Hastings-Simon)
+
 - <a href="https://www.policyschool.ca/wp-content/uploads/2022/10/wind-windfall-final.pdf" target="blank">An Alberta wind energy windfall</a>, School of Public Policy, Energy & Environmental Policy Trends, Oct 20, 2022 (with Sara Hastings-Simon, Andrew Leach, and Tim Weis)
 
 * <a href="https://institute.smartprosperity.ca/CarbonTaxHouseholds" target="blank">How do B.C. households spend carbon tax rebates?</a>, Smart Prosperity Institute, June 13, 2022 (with Nic Rivers)
