@@ -13,7 +13,7 @@ image:
   preview_only: false
 projects: []
 publication: '*International Journal of Industrial Organization*'
-publication_short: "IJIO"
+publication_short: "International Journal of Industrial Organization"
 publication_types:
 - "2"
 publishDate: "2022-04-15T00:00:00Z"
