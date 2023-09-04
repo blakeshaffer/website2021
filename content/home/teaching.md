@@ -16,13 +16,13 @@ weight = 40
 +++
 
 This academic year I am teaching: 
+- ECON 557: Advanced Microeconomic Theory (Undergraduate), Fall 2023
+- PPOL 623: MPP Capstone course (Masters), Fall 2023/Winter 2024 with Dr. Jen Winter
 
+Past courses taught include:
 - [ECON 429](uploads/econ429/index.html): Advanced Economics of Electricity Markets (Undergraduate), Winter 2023
 - ECON 557: Advanced Microeconomic Theory (Undergraduate), Fall 2022
 - PPOL 623: MPP Capstone course (Masters), Fall 2022/Winter 2023 with Dr. Kent Fellows
-
-Past courses taught include:
-
 - ECON 429: Advanced Economics of Electricity Markets (Undergraduate), Winter 2022
 - PPOL 623: MPP Capstone course (Masters), Fall 2021/Winter 2022 with Dr. Lisa Young
 - SEDV 623: Strategic Environmental Planning for Energy Organizations (Masters), Winter 2021
