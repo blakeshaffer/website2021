@@ -36,6 +36,8 @@ design:
   #   4 = Citation (publication only)
   view: 4
 ---
+* <a href="https://www.theglobeandmail.com/opinion/article-danielle-smith-may-be-grandstanding-but-canadas-clean-electricity/" target="blank">Danielle Smith may be grandstanding, but Canada’s Clean Electricity Regulations do need a fix</a>, Globe and Mail, October 10, 2023 (with Andrew Leach)
+
 - <a href="https://www.theglobeandmail.com/opinion/article-climate-change-canada-low-carbon-economy/" target="blank">Canada should try to profit from the U.S. transition to a low-carbon economy</a>, Globe and Mail, Oct 12, 2022 (with Michael Bernstein and Dale Beugin)
 
 * <a href="https://www.theglobeandmail.com/opinion/article-removing-policy-uncertainty-can-position-canada-for-a-decarbonizing/" target="blank">Removing policy uncertainty can position Canada for a decarbonizing world</a>, Globe and Mail, June 2, 2022 (with Dale Beugin)
