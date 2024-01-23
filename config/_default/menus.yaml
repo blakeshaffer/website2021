@@ -14,7 +14,7 @@ main:
     url: '#contact'
     weight: 30
   - name: "CV"
-    url: 'uploads/Blake Shaffer current CV.pdf'
+    url: 'uploads/Blake_Shaffer_CV.pdf'
     weight: 40
 
     

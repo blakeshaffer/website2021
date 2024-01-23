@@ -43,7 +43,7 @@ social:
   link: https://github.com/blakeshaffer
 - icon: cv
   icon_pack: ai
-  link: '/uploads/Blake Shaffer current CV.pdf'
+  link: '/uploads/Blake_Shaffer_CV.pdf'
 
 superuser: true
 title: Blake Shaffer
@@ -60,4 +60,4 @@ My recent research has been published in Nature, American Economic Journal: Econ
 The American Economic Association encourages its members to openly provide a disclosure statement. Mine can be found {{< staticref "uploads/COI disclosure.pdf" "newtab" >}}here{{< /staticref >}}.
 
 
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/Blake Shaffer current CV.pdf" "newtab" >}}CV{{< /staticref >}}.
+{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/Blake_Shaffer_CV.pdf" "newtab" >}}CV{{< /staticref >}}.
