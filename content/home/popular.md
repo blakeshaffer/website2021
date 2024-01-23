@@ -36,6 +36,8 @@ design:
   #   4 = Citation (publication only)
   view: 4
 ---
+- <a href="https://www.theglobeandmail.com/business/commentary/article-lessons-from-an-alberta-power-market-on-the-brink/" target="blank">Lessons from an Alberta power market on the brink</a>, Globe and Mail, Jan 22, 2024
+
 * <a href="https://www.theglobeandmail.com/opinion/article-danielle-smith-may-be-grandstanding-but-canadas-clean-electricity/" target="blank">Danielle Smith may be grandstanding, but Canada’s Clean Electricity Regulations do need a fix</a>, Globe and Mail, October 10, 2023 (with Andrew Leach)
 
 - <a href="https://www.theglobeandmail.com/opinion/article-climate-change-canada-low-carbon-economy/" target="blank">Canada should try to profit from the U.S. transition to a low-carbon economy</a>, Globe and Mail, Oct 12, 2022 (with Michael Bernstein and Dale Beugin)
