@@ -23,8 +23,7 @@ summary:
 tags:
 - demand response
 - field experiment
-title: "Centralized vs decentralized demand response: Evi-
-dence from a field experiment"
+title: "Centralized vs decentralized demand response: Evidence from a field experiment"
 url_code: ""
 url_dataset: ""
 url_pdf: ""
