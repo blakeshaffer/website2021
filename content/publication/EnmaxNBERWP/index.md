@@ -17,7 +17,7 @@ publication: 'American Economic Journal: Economic Policy'
 publication_short: "American Economic Journal: Economic Policy (forthcoming)"
 publication_types:
 - "2"
-publishDate: "2025-09-03T00:00:00Z"
+publishDate: "2024-09-03T00:00:00Z"
 slides:
 summary: 
 tags:
