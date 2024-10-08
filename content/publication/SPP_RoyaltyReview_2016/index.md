@@ -13,7 +13,7 @@ projects: []
 publication: '*School of Public Policy Briefing Paper* 9 (7)'
 publication_short: "School of Public Policy Briefing Paper"
 publication_types:
-- "4"
+- "7"
 publishDate: "2016-02-01T00:00:00Z"
 slides:
 summary: "Lifting the hood on Alberta’s royalty review"

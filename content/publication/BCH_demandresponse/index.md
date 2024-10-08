@@ -1,9 +1,11 @@
 ---
-abstract: 
+abstract:
 authors:
+- Megan Bailey
+- David Brown
 - admin
-- Nic Rivers
-date: "2020-09-01T00:00:00Z"
+- Frank Wolak
+date: "2024-09-03T00:00:00Z"
 doi: ""
 featured: false
 image:
@@ -11,19 +13,18 @@ image:
   focal_point: ""
   preview_only: false
 projects: []
-publication: '*Working Paper*'
+publication: 'Working Paper'
 publication_short: "Working Paper"
 publication_types:
-- "99"
-publishDate: "2020-09-01T00:00:00Z"
+- "1"
+publishDate: "2024-09-03T00:00:00Z"
 slides:
 summary: 
 tags:
-- climate change
-- carbon tax
-- climate action rebate
-- consumer spending
-title: "How do consumers spend carbon tax rebates?"
+- demand response
+- field experiment
+title: "Centralized vs decentralized demand response: Evi-
+dence from a field experiment"
 url_code: ""
 url_dataset: ""
 url_pdf: ""

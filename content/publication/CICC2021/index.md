@@ -13,7 +13,7 @@ projects: []
 publication: '*Canadian Institute for Climate Choices*'
 publication_short: "Canadian Institute for Climate Choices"
 publication_types:
-- "4"
+- "7"
 publishDate: "2021-10-03T00:00:00Z"
 slides:
 summary: "Electricity is a cornerstone of Canada’s pathway to net zero emissions. From a national perspective, Canada is well ahead of the global curve in terms of low-emitting electricity. However, the national average masks considerable heterogeneity at the provincial level: 1) low-emitting hydroelectric and nuclear-based provinces (B.C., Manitoba, Quebec, Newfoundland and Labrador, and Ontario) and 2) fossil fuel-based provinces (Alberta, Saskatchewan, New Brunswick, and Nova Scotia). Getting to net zero thus requires a careful look at the challenges and opportunities at the provincial level. This white paper highlights the following five key technology pathways to decarbonizing electricity systems in Canada and discusses policy and economic challenges and takeaways for each: variable renewable energy; clean firm supply; transmission; enhancing demand flexibility; and storage"

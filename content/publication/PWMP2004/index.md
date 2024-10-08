@@ -1,8 +1,8 @@
 ---
 abstract: On February 17th, 2003, the London Congestion Charging Scheme came into effect. Preliminary results show a significant response to the 5GBP (8USD) charge. Congestion over the first year decreased by 30 per cent, overall traffic levels within the charging zone fell by 16 per cent, speeds for car travel increased by over 20 per cent and bus travel became more reliable. Elasticities of demand for trips by car with respect to generalized costs are estimated to be between –1.32 and –2.10. The average marginal congestion cost within the central zone is estimated at 1.65GBP per veh-km (approximately 2.58USD per veh-km). The net economic benefits of the Scheme for the first year were 50 million (78 million USD) and the net revenues, 68 million GBP (106 million USD). Net revenues are being mainly used to improve public transport.
 authors:
-- admin
 - Georgina Santos
+- admin
 date: "2004-10-01T00:00:00Z"
 doi: "https://doi.org/10.1177/1087724X04268569"
 featured: false

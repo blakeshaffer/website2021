@@ -32,7 +32,7 @@ projects: []
 publication: '*BMC Public Health*'
 publication_short: "BMC Public Health"
 publication_types:
-- "7"
+- "4"
 publishDate: "2021-04-21T00:00:00Z"
 slides:
 summary: "Public support of public health measures including physical distancing, masking, staying home while sick, avoiding crowded indoor spaces and contact tracing/exposure notification applications remains critical for reducing spread of COVID-19. The aim of our work was to understand current behaviours and attitudes towards public health measures as well as barriers individuals face in following public health measures. We also sought to identify attitudes persons have regarding a COVID-19 vaccine and reasons why they may not accept a vaccine."

@@ -7,9 +7,9 @@ widget: pages
 headless: true
 
 # Order that this section appears on the page.
-weight: 22
+weight: 21
 
-title: Journal Articles (outside Energy and Economics)
+title: Journal Articles (Energy)
 subtitle: ''
 
 content:
@@ -25,7 +25,7 @@ content:
   filters:
     tag: ''
     category: ''
-    publication_type: '4'
+    publication_type: '3'
     author: ''
     exclude_featured: true
 design:

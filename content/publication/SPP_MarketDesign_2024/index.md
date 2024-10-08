@@ -14,7 +14,7 @@ projects: []
 publication: '*School of Public Policy Research Paper* 17 (2)'
 publication_short: "School of Public Policy Research Paper"
 publication_types:
-- "4"
+- "7"
 publishDate: "2024-02-06T00:00:00Z"
 slides:
 summary: "Market Design for the 21st Century: Recommendations for Alberta's Power Market"

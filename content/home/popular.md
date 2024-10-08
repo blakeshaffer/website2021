@@ -7,7 +7,7 @@ widget: pages
 headless: true
 
 # Order that this section appears on the page.
-weight: 25
+weight: 27
 
 title: Popular media
 subtitle: ''
@@ -25,7 +25,7 @@ content:
   filters:
     tag: ''
     category: ''
-    publication_type: '10'
+    publication_type: '9'
     author: ''
     exclude_featured: true
 design:

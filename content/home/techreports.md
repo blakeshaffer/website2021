@@ -7,9 +7,9 @@ widget: pages
 headless: true
 
 # Order that this section appears on the page.
-weight: 22
+weight: 24
 
-title: Journal Articles (outside Energy and Economics)
+title: Technical Reports
 subtitle: ''
 
 content:
@@ -25,7 +25,7 @@ content:
   filters:
     tag: ''
     category: ''
-    publication_type: '4'
+    publication_type: '6'
     author: ''
     exclude_featured: true
 design:

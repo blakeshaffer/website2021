@@ -15,7 +15,7 @@ projects: []
 publication: '*C.D. Howe Institute Research Paper* 492'
 publication_short: "C.D. Howe Institute Research Paper"
 publication_types:
-- "4"
+- "7"
 publishDate: "2017-09-01T00:00:00Z"
 slides:
 summary: "All’s Well that Ends Well: Addressing End-of-Life Liabilities for Oil and Gas Wells"

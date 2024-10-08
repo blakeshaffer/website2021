@@ -7,9 +7,9 @@ widget: pages
 headless: true
 
 # Order that this section appears on the page.
-weight: 24
+weight: 26
 
-title: Policy notes
+title: Policy Notes
 subtitle: ''
 
 content:
@@ -25,7 +25,7 @@ content:
   filters:
     tag: ''
     category: ''
-    publication_type: '10'
+    publication_type: '8'
     author: ''
     exclude_featured: true
 design:

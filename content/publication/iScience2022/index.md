@@ -15,7 +15,7 @@ projects: []
 publication: '*iScience*'
 publication_short: "iScience"
 publication_types:
-- "2"
+- "3"
 publishDate: "2022-02-15T00:00:00Z"
 slides:
 summary: 

@@ -1,9 +1,9 @@
 ---
 abstract: "Alberta’s Renewable Electricity Program: Design, Results, and Lessons Learned"
 authors:
-- admin
 - Sara Hastings-Simon
 - Andrew Leach
+- admin
 - Tim Weis
 date: "2022-10-01T00:00:00Z"
 doi: ""

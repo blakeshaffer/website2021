@@ -43,7 +43,7 @@ projects: []
 publication: '*JMIR Public Health Surveillance*'
 publication_short: "JMIR Public Health Surveillance"
 publication_types:
-- "7"
+- "4"
 publishDate: "2021-12-04T00:00:00Z"
 slides:
 summary: "Background:

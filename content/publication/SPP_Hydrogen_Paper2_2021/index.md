@@ -15,7 +15,7 @@ projects: []
 publication: '*School of Public Policy Research Paper* 14 (31)'
 publication_short: "School of Public Policy Research Paper"
 publication_types:
-- "4"
+- "7"
 publishDate: "2021-11-03T00:00:00Z"
 slides:
 summary: "The role of hydrogen in decarbonizing Alberta's electricity system"

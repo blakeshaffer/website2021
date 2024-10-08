@@ -9,7 +9,7 @@ headless: true
 # Order that this section appears on the page.
 weight: 20
 
-title: Journal articles
+title: Journal Articles (Economics)
 subtitle: ''
 
 content:

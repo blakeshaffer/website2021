@@ -18,7 +18,7 @@ projects: []
 publication: '*Joule*'
 publication_short: "Joule"
 publication_types:
-- "2"
+- "3"
 publishDate: "2022-02-07T00:00:00Z"
 slides:
 summary: 

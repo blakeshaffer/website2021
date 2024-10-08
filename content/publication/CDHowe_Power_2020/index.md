@@ -1,9 +1,9 @@
 ---
 abstract: "The price of power: Comparative electricity costs across provinces"
 authors:
-- admin
 - Grant Bishop
 - Mariam Ragab
+- admin
 date: "2020-10-03T00:00:00Z"
 doi: ""
 featured: false
@@ -15,7 +15,7 @@ projects: []
 publication: '*C.D. Howe Institute* 582'
 publication_short: "C.D. Howe Institute"
 publication_types:
-- "4"
+- "7"
 publishDate: "2020-10-03T00:00:00Z"
 slides:
 summary: "The price of power: Comparative electricity costs across provinces"

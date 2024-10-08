@@ -15,7 +15,7 @@ projects: []
 publication: '*Nature*'
 publication_short: "Nature"
 publication_types:
-- "2"
+- "3"
 publishDate: "2021-10-12T00:00:00Z"
 slides:
 summary: 

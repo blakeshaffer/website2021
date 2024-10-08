@@ -17,7 +17,7 @@ projects: []
 publication: '*School of Public Policy Research Paper* 14 (32)'
 publication_short: "School of Public Policy Research Paper"
 publication_types:
-- "4"
+- "7"
 publishDate: "2021-11-09T00:00:00Z"
 slides:
 summary: "A multiple account benefit-cost analysis of coal mining in Alberta"

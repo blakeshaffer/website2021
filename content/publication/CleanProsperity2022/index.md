@@ -1,10 +1,10 @@
 ---
 abstract: "Closing the Carbon-Pricing Certainty Gap"
 authors:
-- admin
 - Jason Clark
 - Michael Bernstein
 - Dale Beugin
+- admin
 - Jake Wadland
 date: "2022-10-12T00:00:00Z"
 doi: ""
@@ -17,7 +17,7 @@ projects: []
 publication: '*Clean Prosperity*'
 publication_short: "Clean Prosperity"
 publication_types:
-- "4"
+- "7"
 publishDate: "2022-10-12T00:00:00Z"
 slides:
 summary: "Closing the Carbon-Pricing Certainty Gap"

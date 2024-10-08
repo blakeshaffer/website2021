@@ -13,7 +13,7 @@ projects: []
 publication: '*School of Public Policy Summary Paper* 12 (28)'
 publication_short: "School of Public Policy Summary Paper"
 publication_types:
-- "4"
+- "7"
 publishDate: "2019-09-01T00:00:00Z"
 slides:
 summary: "The Role of Storage in Alberta’s Electricity Market: Summary of a School of Public Policy Roundtable Event."

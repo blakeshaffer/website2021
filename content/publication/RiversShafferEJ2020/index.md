@@ -1,8 +1,8 @@
 ---
 abstract: This paper examines how rising temperature due to climate change will affect the demand for electricity through mid- and end-century. We extend recent literature by directly incorporating adaptation in the form of increased air conditioner penetration into temperature responsiveness and focussing on changes to both the level and timing of future electricity demand. The latter is found to be of greater importance in colder countries, where the level effect is dampened by offsetting reductions in heating demand from warmer winters. Seasonal peaks are projected to shift from winter to summer and the diurnal range of hourly demand expands, exacerbating an increasing need for flexibility coming from the supply side due to a growing share of variable renewable energy.
 authors:
-- admin
 - Nic Rivers
+- admin
 date: "2020-11-01T00:00:00Z"
 doi: ""
 featured: false
@@ -12,7 +12,7 @@ image:
   preview_only: false
 projects: []
 publication: '*The Energy Journal* 41 (5)'
-publication_short: "Energy Journal"
+publication_short: "The Energy Journal"
 publication_types:
 - "2"
 publishDate: "2020-11-01T00:00:00Z"

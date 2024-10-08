@@ -27,7 +27,7 @@ projects: []
 publication: '*Scientific Reports*'
 publication_short: "Scientific Reports"
 publication_types:
-- "7"
+- "4"
 publishDate: "2021-11-04T00:00:00Z"
 slides:
 summary: "Adoption of non-pharmaceutical interventions (NPIs) remains critical to curtail the spread of COVID-19. Using self-reported adherence to NPIs in Canada, assessed through a national cross-sectional survey of 4498 respondents, we aimed to identify and characterize non-adopters of NPIs, evaluating their attitudes and behaviours to understand barriers and facilitators of adoption. A cluster analysis was used to group adopters separately from non-adopters of NPIs. Associations with sociodemographic factors, attitudes towards COVID-19 and the public health response were assessed using logistic regression models comparing non-adopters to adopters. Of the 4498 respondents, 994 (22%) were clustered as non-adopters. Sociodemographic factors significantly associated with the non-adoption cluster were: (1) being male, (2) age 18–34 years, (3) Albertans, (4) lower education level and (5) higher conservative political leaning. Participants who expressed low concern for COVID-19 and distrust towards several institutions had greater odds of being non-adopters. This information characterizes individuals at greatest odds for non-adoption of NPIs to inform targeted marketing interventions."
