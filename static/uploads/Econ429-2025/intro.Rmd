@@ -85,15 +85,11 @@ ggplot(df,aes(year,load,label=load))+
 ```
 
 
-**Now it's your turn!**
+**Now let's try something more...**
 
-For this initial exercise, I want you to do two things:
+Let's look at annual percentage changes.
 
-1) Create your own time series chart using the data above. Use the principles of good data visualization to create a clear chart that easily conveys the data to the viewer. You may want to explore the `ggthemes` package, which has some nice preset themes to change the appearance of the chart. A great resource for good data visualization (IMHO) is Claus Wilke's (free) e-book [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/). Along with your new time series chart, make a note of a principle you've taken from the book in making your chart.
-
-2) There aren't too many ways to slice and dice this simple dataset, but how about a time series of **annual percentage changes**. Some tips to get you started on doing that:
-  - To create a new variable, the tidyverse has the `mutate` command. For example `df <- df %>% mutate(double_load = 2 x load)` would update the `df` dataframe with a newly created variable `double_load` with, you guessed it, twice the value of the old `load` variable. 
-  - In this case, you need to calculate the difference from one year to the next. A tip is use R's `lag` function that is part of the tidyverse's `dplyr` package (no need to load this package; it is part of the `tidyverse`)
+To do this, we are going to have to calculate the percentage change as the current year value / prior year value - 1. We can use the `mutate` command and the `lag` function to do this!
 
 ```{r}
 df <- df %>%
@@ -108,6 +104,94 @@ ggplot(df,aes(year,pct_change))+
         panel.grid.major.x=element_blank())
 ```
 
-For more tips on learning R and creating charts using `ggplot`, I highly recommend the free e-book [R for Data Science](https://r4ds.had.co.nz/) by Hadley Wickham. It starts from zero and takes you to producing creative charts very quickly.
+
+**Now let's try something more...**
+
+Maybe we made it this far in class, maybe you're doing this at home...
+
+Let's dig a little deeper into load data. Specifically, let's look at monthly and even hourly shapes. To do that, you'll have to download a different file with hourly load shapes.
+
+It just so happens I've made one for you! 25 years of hourly data...
+
+```{r, cache=TRUE}
+download.file("https://blakeshaffer.ca/uploads/data/AIL.xlsx",
+              destfile="hourly_load.xlsx",
+              mode="wb")
+data <- read_xlsx("hourly_load.xlsx")
+```
+
+Let's take a peak at this data object:
+```{r, cache=T}
+head(data)
+```
+Ok! We have data! But there's a problem. It read in the Datetime variable as a character.
+
+We want to convert that to a date object using `lubridate` functionality. 
+
+
+```{r, cache=T}
+data <- data %>%
+  mutate(Datetime=mdy_hm(Datetime))
+head(data)
+```
+
+Looks the same but note that now Datetime is a `POSIXct` variable, which is Date-time for lubridate. That's good!
+
+Now we can do some slicing and dicing!
+
+Let's start by creating year and month averages. To do this we will use `mutate`, `group_by` and `summarise`. I'll create a new dataframe to preserve the raw data.
+
+```{r, cache=T}
+df <- data %>%
+  mutate(year=year(Datetime),
+         month=month(Datetime)) %>%
+  group_by(year,month) %>%
+  summarise(Load=mean(Load))
+```
+
+Rather than a time series plot, let's plot by month with different colored lines for the years!
+
+```{r,cache=T}
+ggplot(df, aes(month,Load,color=factor(year)))+
+  geom_line()+
+  scale_color_viridis_d()
+```
+
+Let's try hourly shapes and use the `facet_wrap` feature. Let's look only at 2024 data and get hourly averages by month, plotting each month in a mini-plot.
+
+```{r, cache=T}
+df.hourly <- data %>%
+  filter(year(Datetime)==2024) %>%
+  mutate(hour=hour(Datetime),
+         month=month(Datetime)) %>%
+  group_by(hour,month) %>%
+  summarise(Load=mean(Load))
+
+ggplot(df.hourly, aes(hour,Load))+
+  facet_wrap(~month)+
+  geom_line()
+```
+
+Last thing! Let's see if we can see some effect from rooftop solar in Alberta. 
+
+```{r, cache=T}
+df.june <- data %>%
+  filter(month(Datetime)==6) %>%
+  mutate(hour=hour(Datetime),
+         year=year(Datetime)) %>%
+  group_by(hour,year) %>%
+  summarise(Load=mean(Load))
+
+ggplot(df.june %>% filter(year>=2020), aes(hour,Load,color=factor(year)))+
+  geom_line(size=1)+
+  scale_color_colorblind()
+```
+
+**More tips for R and data vizualization**
+
+For more tips on learning R and creating charts using `ggplot`, I highly recommend the free e-book [R for Data Science](https://r4ds.had.co.nz/) by Hadley Wickham. It starts from zero and takes you to producing creative charts very quickly. You may want to explore the `ggthemes` package, which has some nice preset themes to change the appearance of the chart. 
+
+A great resource for good data visualization (IMHO) is Claus Wilke's (free) e-book [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/).
+
 
 
