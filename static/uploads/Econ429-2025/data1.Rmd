@@ -1,0 +1,243 @@
+---
+title: "Data Assignment 1"
+output: html_document
+date: "Due: 2025-03-05"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. Start by setting up your AESO API access
+
+To fetch the data you will need for this assignment, you will first need to register with the AESO for API access.Instructions to do that are here: 
+
+https://www.aeso.ca/assets/downloads/external/api/API-Access-Instructions-APIM-API-Gateway.pdf
+
+With those instructions in hand, proceed to this link to register and set up your API:
+
+https://developer-apim.aeso.ca/signup
+
+
+## 2. Some preliminaries in R
+
+Open up your RStudio and launch a new script (File > New File > RScript).
+
+Load up the following packages (install them if you haven't already done so). In addition, let's save your AESO_key
+
+```{r prelim, warning=FALSE,message=FALSE}
+library(tidyverse)
+library(httr)
+library(jsonlite)
+library(lubridate)
+library(ggthemes)
+
+aeso_key = "9bf8f1768ba84f2b80bae5bb224dd9b5" #some mess of numbers and letters that will be unique to you
+```
+
+
+## 3. Fetch price data
+
+Now that you have a working API key, let's fetch some data!
+
+We will start with *hourly price data*. I've taken the step of writing a function for you that will pull one year's worth of data.
+
+```{r fetch_data, cache=TRUE}
+
+get_price_data <- function(start_date,end_date,aeso_key){
+  data <- GET(url="https://apimgw.aeso.ca/public/poolprice-api/v1.1/price/poolPrice?",
+              add_headers("API-Key" = aeso_key),
+              query = list(
+                startDate = format(start_date, "%Y-%m-%d"),
+                endDate = format(end_date, "%Y-%m-%d")))
+  data <- as.data.frame(fromJSON(rawToChar(data$content)))
+  return(data)
+}
+
+start_date<-as.Date("2022-01-01")
+end_date<-as.Date("2022-12-31")
+
+df <- get_price_data(start_date,end_date,aeso_key)
+head(df)
+```
+
+There are more columns here than we need, so let's select only the relevant time column and price column, and then let's turn them into datetime  (POSIXct) and numerical objects, respectively.
+
+To take a look at the data, do a quick line plot.
+
+```{r clean_df}
+df <- df %>%
+  select(datetime=return.Pool.Price.Report.begin_datetime_mpt,
+         price=return.Pool.Price.Report.pool_price) %>%
+  mutate(datetime=ymd_hm(datetime),
+         price=as.numeric(price))
+
+ggplot(df,aes(datetime,price))+
+  geom_line()
+```
+
+
+Before moving on, let's go through an example of how we can take this long time series of 8760 hourly prices and calculate monthly means (and plot them). To do that we will first use `mutate` to create month variables and `group_by` with `summarize` to calculate conditions means. Like this:
+
+```{r monthly}
+df.monthly <- df %>%
+  mutate(month=month(datetime)) %>%
+  group_by(month) %>%
+  summarize(price=mean(price))
+
+head(df.monthly)
+```
+
+Then let's do a simple bar (column) chart with text labels above the bars:
+
+```{r monthly_plot}
+ggplot(df.monthly,aes(month,price,label=round(price)))+
+  geom_col()+
+  geom_text(vjust=-.5)+
+  labs(x="",y="$/MWh")+
+  scale_x_continuous(breaks=seq(1,12,1),labels=month.abb)
+```
+
+If you want to pretty it up a little, try it different `theme_XXX` options from the ggthemes package. For example, here's the Economist format:
+
+```{r monthly_plot_economist}
+ggplot(df.monthly,aes(month,price,label=round(price)))+
+  geom_col()+
+  geom_text(vjust=-.5)+
+  scale_x_continuous(breaks=seq(1,12,1),labels=month.abb)+
+  scale_y_continuous(labels=scales::dollar,expand=expansion(mult=c(0,.1)))+
+  theme_economist()+
+  theme(axis.ticks.length = unit(5, "pt"), # Adjust tick length
+        axis.ticks = element_line(linewidth = 0.5), # Ensure ticks are visible
+        axis.ticks.margin = unit(-2, "pt"))+
+  labs(x="",y="$/MWh",
+       caption="Data source: AESO.ca\nCool chart by Blake",
+       title="Monthly Alberta power prices",
+       subtitle="2022")
+```
+
+## 4. Let's grab 24 years of data now!
+
+Ok, that works. But the API only allows you to pull 1 year of data at a time. Let's write a loop to run for each year between 2001 and 2024, plunk them each into a list, and then merge it all into one single data frame to rule them all! :)
+
+```{r loop, cache=TRUE}
+# Define the range of years you want to loop through
+years <- 2001:2024  # Adjust as needed
+
+# Initialize an empty list to store yearly data frames
+all_data <- list()
+
+# Loop through each year
+for (year in years) {
+  start_date <- as.Date(paste0(year, "-01-01"))
+  end_date <- as.Date(paste0(year, "-12-31"))
+  
+  # Call the function and store the result in the list
+  all_data[[as.character(year)]] <- get_price_data(start_date, end_date,aeso_key)
+}
+
+# Combine all data frames into one
+final_data <- do.call(rbind, all_data)
+
+# now create the data frame you want to work with
+df <- final_data %>%
+  select(datetime=return.Pool.Price.Report.begin_datetime_mpt,
+         price=return.Pool.Price.Report.pool_price) %>% 
+  mutate(datetime=ymd_hm(datetime),
+         price=as.numeric(price))
+
+# plot it just to take a look
+ggplot(df,aes(datetime,price))+
+  geom_line()
+```
+
+Alright! Ugly chart, but it works.
+
+## Now for Assignment 1
+
+Complete the following 4 problems.
+
+You must submit 2 files to dropbox:
+
+1. A word or pdf file with your output (i.e. your plots pasted in)
+2. Your R script (code)
+
+## Problem 1: A simple bar plot of annual prices
+
+Produce a plot that looks like this.
+
+Hint: transform your `df` dataframe using the `group_by` and `summarize` commands.
+
+```{r q1, echo=FALSE}
+df.year <- df %>%
+  mutate(year=year(datetime)) %>%
+  group_by(year) %>%
+  summarize(price=mean(price))
+
+ggplot(df.year,aes(year,price,label=round(price)))+
+  geom_col()+
+  geom_text(vjust=-.5)+
+  labs(x="",y="$/MWh")
+```
+
+
+## Problem 2: Annual frequency of $0 hours
+
+Produce a plot that looks like this.
+
+Hint: Use the `ifelse` command to tag $0 hours and then transform your `df` dataframe using the `group_by` and `summarize` commands.
+
+```{r q2, echo=FALSE}
+df.zeros <- df %>%
+  mutate(year=year(datetime),
+         zero=ifelse(price==0,1,0)) %>%
+  group_by(year) %>%
+  summarize(zeros=sum(zero))
+
+ggplot(df.zeros,aes(year,zeros,label=round(zeros)))+
+  geom_col()+
+  geom_text(vjust=-.5)+
+  labs(x="",y="# of $0 hours per year")
+```
+
+## Problem 3: Hourly shape for the last 10 Junes
+
+Now i want us to look at how the *hourly shape* of prices--in June--has changed over the past 5 years. To do this, you'll need to take the following steps:
+
+1. `filter` on `month(datetime)==6` to keep only June
+2. `filter` on `year(datetime)>=2015` to keep only the last 10 years
+3. `mutate` new variables for `year` and `hour`
+4. Calculate hourly average prices for each hour in each year (hint: use `group_by(hour,year)` and `summarise`)
+
+Now you'll have 24 hours x 10 years of average prices. But if we want to look at *shape* we should create a new variable, call it `hourly_scalar` that is equal to the hourly average price divided by that year's average price for June. (So if the average price in June 2021 was $50, and the average hourly price for hour 1 in June 2021 was $40, you would get 0.8 for this variable). To do that you will need to:
+
+5. `group_by(year`) and this time `mutate(hourly_scalar=price/mean(price))`
+
+Note that the `mean` in the above command will be getting each year's mean and the `price` is already the hourly mean for each year.
+
+Lastly, create a line chart like the one below. To get multiple lines, you need to add `color=factor(year)` into the `aes()` declaration.
+
+```{r q3, echo=FALSE}
+df.summer <- df %>%
+  filter(year(datetime)>=2015,
+         month(datetime)==6) %>%
+  mutate(year=year(datetime),
+         hour=hour(datetime)) %>%
+  group_by(hour,year) %>%
+  summarise(price=mean(price))
+
+#Now create hourly ratios of average prices for each year
+df.summer <- df.summer %>%
+  group_by(year) %>%
+  mutate(hourly_scalar=price/mean(price))
+
+ggplot(df.summer,(aes(hour,hourly_scalar,color=factor(year))))+
+  geom_line(size=1)+
+  scale_color_viridis_d()
+```
+
+Why do you think the 2024 shape is so different from the others?
+
+## Problem 4: Choose your own adventure!
+
+This is your chance to be creative. Using the big price time series you've downloaded, show me *any chart* that you think is interesting. Points for being interesting and for the clarity of the visualization!
