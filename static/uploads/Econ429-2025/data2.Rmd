@@ -1,0 +1,296 @@
+---
+title: "Data Assignment 2"
+output: html_document
+date: "2025-03-17"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,warning=FALSE,message=FALSE)
+```
+
+## Let's start with the preliminaries again
+
+Open up your RStudio and launch a new script (File > New File > RScript).
+
+Load up the following packages (install them if you haven't already done so). In addition, let's save your AESO_key
+
+```{r prelim}
+library(tidyverse)
+library(httr)
+library(jsonlite)
+library(lubridate)
+library(ggthemes)
+
+aeso_key = "9bf8f1768ba84f2b80bae5bb224dd9b5" #some mess of numbers and letters that will be unique to you
+```
+
+## 1. Let's start by looking at load data this time
+
+I've made us a function to grab that load data from the API. Let's use that to pull 2024 data and do a quick plot. For this question, reproduce the plot below but *make it look nicer*!
+
+```{r load}
+get_load_data <- function(start_date,end_date,aeso_key){
+  data <- GET(url="https://apimgw.aeso.ca/public/actualforecast-api/v1/load/albertaInternalLoad?",
+              add_headers("API-Key" = aeso_key),
+              query = list(
+                startDate = format(start_date, "%Y-%m-%d"),
+                endDate = format(end_date, "%Y-%m-%d")))
+  data <- as.data.frame(fromJSON(rawToChar(data$content)))
+  return(data)
+}
+
+start_date<-as.Date("2022-01-01")
+end_date<-as.Date("2022-12-31")
+
+df <- get_load_data(start_date,end_date,aeso_key) %>%
+  select(datetime=return.Actual.Forecast.Report.begin_datetime_mpt,
+         load=return.Actual.Forecast.Report.alberta_internal_load) %>%
+  mutate(datetime=ymd_hm(datetime),
+         load=as.numeric(load))
+
+ggplot(df,aes(datetime,load))+
+  geom_line()
+```
+
+## 2. Do the same, but for 2001-2024 as one long series. 
+
+You should be able to loop through the above code for years=2001:2024. If done correctly, it will produce a plot like this. Recreate something like this plot (with a different, nicer, theme). Add the geom_smooth through the volatile data.
+
+
+```{r load_all,cache=T,echo=F}
+# Define the range of years you want to loop through
+years <- 2001:2024  # Adjust as needed
+
+# Initialize an empty list to store yearly data frames
+all_data <- list()
+
+# Loop through each year
+for (year in years) {
+  start_date <- as.Date(paste0(year, "-01-01"))
+  end_date <- as.Date(paste0(year, "-12-31"))
+  
+  # Call the function and store the result in the list
+  all_data[[as.character(year)]] <- get_load_data(start_date, end_date,aeso_key)
+}
+
+# Combine all data frames into one
+final_data <- do.call(rbind, all_data)
+
+df <- final_data %>%
+  select(datetime=return.Actual.Forecast.Report.begin_datetime_mpt,
+         load=return.Actual.Forecast.Report.alberta_internal_load) %>% 
+  mutate(datetime=ymd_hm(datetime),
+         load=as.numeric(load))
+
+ggplot(df,aes(datetime,load))+
+  geom_line()+
+  geom_smooth()
+```
+
+## 3. Make me a plot of load. Anything that you find interesting. 
+
+Could be year/year changes, average hourly shapes (changing by month or season), average seasonal shapes (changing by year). Points for creativity and visual clarity.
+
+## 4. Let's pull in prices and load for the first 2 months of 2025 and do a scatter plot.
+
+Now we are going to pull prices again (using our code from Data 1), merge with load data, and do some scatter plots. Bonus points for running regressions!
+
+```{r price}
+# let's do this for the first 2 months of 2025
+start_date<-as.Date("2025-01-01")
+end_date<-as.Date("2025-2-28")
+
+# start by getting load data
+df.load <- get_load_data(start_date,end_date,aeso_key) %>%
+  select(datetime=return.Actual.Forecast.Report.begin_datetime_mpt,
+         load=return.Actual.Forecast.Report.alberta_internal_load) %>% 
+  mutate(datetime=ymd_hm(datetime),
+         load=as.numeric(load))
+
+# recall price API function
+get_price_data <- function(start_date,end_date,aeso_key){
+  data <- GET(url="https://apimgw.aeso.ca/public/poolprice-api/v1.1/price/poolPrice?",
+              add_headers("API-Key" = aeso_key),
+              query = list(
+                startDate = format(start_date, "%Y-%m-%d"),
+                endDate = format(end_date, "%Y-%m-%d")))
+  data <- as.data.frame(fromJSON(rawToChar(data$content)))
+  return(data)
+}
+
+# get price data
+df.price <- get_price_data(start_date,end_date,aeso_key) %>%
+  select(datetime=return.Pool.Price.Report.begin_datetime_mpt,
+         price=return.Pool.Price.Report.pool_price) %>% 
+  mutate(datetime=ymd_hm(datetime),
+         price=as.numeric(price))
+
+# now let's join 2 dataframe from the side using left_join:
+df <- left_join(df.price,df.load,by="datetime")
+
+ggplot(df, aes(load,price))+
+  geom_point()+
+  geom_smooth(method="lm")
+
+# not a great fit. Let's try taking the log of prices to see if a non-linear fit is better
+df.log <- df %>% 
+  filter(price!=0) %>%
+  mutate(log.price=log(price))
+
+ggplot(df.log, aes(load,log.price))+
+  geom_point()+
+  geom_smooth(method="lm")
+
+# don't love dropping those pesky zeroes? Try arcsinh!
+df.arcsin <- df %>%
+  mutate(arcsin.price=log(price+sqrt(price^2+1)))
+
+ggplot(df.arcsin, aes(load,arcsin.price))+
+  geom_point()+
+  geom_smooth(method="lm")
+
+```
+
+## 5. Now let's look at some generation data.
+
+Let's start with a single facility. Let's look at Alberta's largest solar farm: Travers solar.
+
+```{r gen_single}
+get_gen_data <- function(start_date,end_date,aeso_key,asset){
+  data <- GET(url="https://apimgw.aeso.ca/public/meteredvolume-api/v1/meteredvolume/details?",
+              add_headers("API-Key" = aeso_key),
+              query = list(
+                startDate = format(start_date, "%Y-%m-%d"),
+                endDate = format(end_date, "%Y-%m-%d"),
+                asset_ID=asset))
+  data <- as.data.frame(fromJSON(rawToChar(data$content)))
+  return(data)
+}
+
+start_date<-as.Date("2024-01-01")
+end_date<-as.Date("2024-12-31")
+asset <- "TVS1"
+
+# pull the data. Take a look at df. The stuff you want is buried in lists. To resolve that, let's perform multiple `unnest` commands.
+df <- get_gen_data(start_date,end_date,aeso_key,asset)
+df2 <- unnest(df,cols=c(return.asset_list))
+df3 <- unnest(df2,cols=c(metered_volume_list))
+
+df.TVS1 <- df3 %>%
+  select(datetime=begin_date_mpt,
+         volume=metered_volume,
+         asset_ID)%>% 
+  mutate(datetime=ymd_hm(datetime),
+         volume=as.numeric(volume))
+
+ggplot(df.TVS1, aes(datetime,volume))+
+  geom_line()
+```
+
+That shows us some seasonality to production. But I want you to plot an average hourly shape of production from this asset. Now i'd like you to show me the **average hourly shape** over 2024 for Travers. Your plot should look something like this:
+
+```{r travers_hourly,echo=F}
+df.TVS1.hourly <- df.TVS1 %>%
+  mutate(hour=hour(datetime)) %>%
+  group_by(hour) %>%
+  summarise(volume=mean(volume))
+
+ggplot(df.TVS1.hourly, aes(hour,volume))+
+  geom_line()
+```
+
+## 6. Last question: generation-weighted prices
+
+A power plants revenue depends on hourly market prices *and* how much the plant is running in each hour. A plant that only generates when hourly prices are low will realise a much lower "capture price" relative to the simple market average, and vice versa.
+
+For this question, I want you to pull generation data from 6 assets (**TVS1, CRS1, EGC1, FH1, HAL2, IEW1**) and plot the ratio of their generation-weighted price and the market average price for each month in 2024. 
+
+The generation-weighted price involves calculating the hourly revenue (price x quantity) and then for each asset and month, you should divide the sum of revenue by the sum of quantity. Compare that to the simple mean of market prices by dividing the "capture price" (generation-weighted price) by the market average price. A ratio greater than 1 means the asset is beating the market; lower than 1 means it's realizing values below the market average.
+
+You should produce a plot like this:
+
+```{r capture,echo=F,cache=T}
+#start by getting hourly prices again
+get_price_data <- function(start_date,end_date,aeso_key){
+  data <- GET(url="https://apimgw.aeso.ca/public/poolprice-api/v1.1/price/poolPrice?",
+              add_headers("API-Key" = aeso_key),
+              query = list(
+                startDate = format(start_date, "%Y-%m-%d"),
+                endDate = format(end_date, "%Y-%m-%d")))
+  data <- as.data.frame(fromJSON(rawToChar(data$content)))
+  return(data)
+}
+start_date<-as.Date("2024-01-01")
+end_date<-as.Date("2024-12-31")
+
+df.price <- get_price_data(start_date,end_date,aeso_key) %>%
+  select(datetime=return.Pool.Price.Report.begin_datetime_mpt,
+         price=return.Pool.Price.Report.pool_price) %>% 
+  mutate(datetime=ymd_hm(datetime),
+         price=as.numeric(price))
+
+#now let's pull some more generation data
+# get gen data for assets: TVS1, CRS1, EGC1, FH1, HAL2, IEW1
+
+# Define the range of years you want to loop through
+assets <- c("CLR1", "CRS1", "EGC1", "FH1", "BUL1", "IEW1")  
+
+# Initialize an empty list to store yearly data frames
+all_data <- list()
+
+# Loop through each year
+for (a in assets) {
+  start_date<-as.Date("2024-01-01")
+  end_date<-as.Date("2024-12-31")
+  asset <- as.character(a)
+  
+  # Call the function and store the result in the list
+  df <- get_gen_data(start_date, end_date,aeso_key,a)
+  df2 <- unnest(df,cols=c(return.asset_list))
+  df3 <- unnest(df2,cols=c(metered_volume_list)) %>%
+    select(datetime=begin_date_mpt,
+           volume=metered_volume,
+           asset_ID)%>% 
+    mutate(datetime=ymd_hm(datetime),
+           volume=as.numeric(volume))
+  all_data[[as.character(a)]] <- df3
+}
+
+# Combine all data frames into one
+final_data <- do.call(rbind, all_data)
+
+df.mult <- left_join(final_data,df.price,by="datetime",relationship="many-to-many") %>%
+  mutate(revenue=price*volume,
+         month=month(datetime)) %>%
+  group_by(month,asset_ID) %>%
+  summarise(average_price=mean(price),
+            weighted_price=sum(revenue)/sum(volume)) %>%
+  mutate(ratio=weighted_price/average_price)
+
+df.avg <- df.mult %>%
+  group_by(asset_ID) %>%
+  summarise(ratio=mean(ratio))
+
+ggplot(df.mult,aes(month,ratio))+
+  facet_wrap(~asset_ID)+
+  geom_col()+
+  geom_hline(yintercept = 1)+
+  geom_hline(data=df.avg,aes(yintercept=ratio),linetype="dashed",color="firebrick")+
+  geom_text(data=df.avg,aes(x=1,y=ratio+.15,label=scales::percent(ratio,1)),color="firebrick")+
+  scale_y_continuous(labels = scales::percent)+
+  scale_x_continuous(breaks=seq(1,12,1),labels=month.abb)+
+  labs(x="",y="% of average price captured",
+       title="Ratio of generation-weighted price to simple average price",
+       subtitle="2024")+
+  theme_clean()
+```
+
+This plot raises some questions (which i want you to answer!).
+
+- What type of power plants are each asset?
+- Why do you think the premium/discounts vary so much across assets?
+- Why do you think they vary so much between the two wind farms?
+
+
+
+
