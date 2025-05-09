@@ -6,7 +6,7 @@ authors:
 - Erica Myers
 - admin
 - Frank Wolak
-date: "2024-09-03T00:00:00Z"
+date: "2025-04-03T00:00:00Z"
 doi: ""
 featured: false
 image:
@@ -14,18 +14,18 @@ image:
   focal_point: ""
   preview_only: false
 projects: []
-publication: 'NBER Working Paper'
-publication_short: "NBER Working Paper"
+publication: 'AER:Insights (forthcoming)'
+publication_short: "AER:Insights (forthcoming)"
 publication_types:
-- "1"
-publishDate: "2024-09-03T00:00:00Z"
+- "2"
+publishDate: "2025-04-03T00:00:00Z"
 slides:
 summary: 
 tags:
 - electric vehicles
 - managed charging
 - field experiment
-title: "Electric Vehicles and the Energy Transition: Unintended Consequences of a Common Retail Rate Design"
+title: "Electric Vehicles and the Energy Transition: Unintended Consequences of Time-of-Use Pricing"
 url_code: ""
 url_dataset: ""
 url_pdf: ""

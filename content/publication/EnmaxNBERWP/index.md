@@ -5,7 +5,7 @@ authors:
 - David Brown
 - admin
 - Frank Wolak
-date: "2024-09-03T00:00:00Z"
+date: "2025-05-01T00:00:00Z"
 doi: ""
 featured: false
 image:
@@ -14,10 +14,10 @@ image:
   preview_only: false
 projects: []
 publication: 'American Economic Journal: Economic Policy'
-publication_short: "American Economic Journal: Economic Policy (forthcoming)"
+publication_short: "American Economic Journal: Economic Policy"
 publication_types:
 - "2"
-publishDate: "2024-09-03T00:00:00Z"
+publishDate: "2025-05-01T00:00:00Z"
 slides:
 summary: 
 tags:
