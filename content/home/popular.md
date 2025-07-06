@@ -36,10 +36,13 @@ design:
   #   4 = Citation (publication only)
   view: 4
 ---
-* <a href="https://macleans.ca/economy/forget-america-build-an-east-west-power-grid/" target="blank">Forget America. Build an East-West Power Grid</a>, Maclean's, 
+- <a href="https://macleans.ca/economy/forget-america-build-an-east-west-power-grid/" target="blank">Forget America. Build an East-West Power Grid</a>, Maclean's, 
 May 16, 2025
 
-- <a href="https://www.theglobeandmail.com/business/commentary/article-lessons-from-an-alberta-power-market-on-the-brink/" target="blank">Lessons from an Alberta power market on the brink</a>, Globe and Mail, Jan 22, 2024
+* <a href="https://www.theglobeandmail.com/opinion/article-canada-needs-a-nation-building-project-it-should-start-with/" target="blank">Canada needs a nation-building project. It should start with interprovincial power transmission</a>, Globe and Mail, 
+April 10, 2025 (with Philippe Dunsky)
+
+- <a href="https://www.theglobeandmail.com/business/commentary/article-lessons-from-an-alberta-power-market-on-the-brink/" target="blank">Lessons from an Alberta power market on the brink</a>, Globe and Mail, January 22, 2024
 
 * <a href="https://www.theglobeandmail.com/opinion/article-danielle-smith-may-be-grandstanding-but-canadas-clean-electricity/" target="blank">Danielle Smith may be grandstanding, but Canada’s Clean Electricity Regulations do need a fix</a>, Globe and Mail, October 10, 2023 (with Andrew Leach)
 
