@@ -36,6 +36,9 @@ design:
   #   4 = Citation (publication only)
   view: 4
 ---
+
+- <a href="https://www.policyschool.ca/wp-content/uploads/2024/11/EEPTrends-EVCharger-Final.pdf" target="blank">Rethinking EV charging</a>, School of Public Policy, Energy & Environmental Policy Trends, November 2024 (with Aviv Fried and Sara Hastings-Simon)
+
 * <a href="https://www.policyschool.ca/wp-content/uploads/2023/03/EFL-policy-trends-March.pdf" target="blank">The regulated rate option trap</a>, School of Public Policy, Energy & Environmental Policy Trends, March 2023 (with Sara Hastings-Simon)
 
 - <a href="https://www.policyschool.ca/wp-content/uploads/2022/10/wind-windfall-final.pdf" target="blank">An Alberta wind energy windfall</a>, School of Public Policy, Energy & Environmental Policy Trends, Oct 20, 2022 (with Sara Hastings-Simon, Andrew Leach, and Tim Weis)
