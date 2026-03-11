@@ -5,7 +5,7 @@ authors:
 - David Brown
 - admin
 - Frank Wolak
-date: "2024-09-03T00:00:00Z"
+date: "2026-02-03T00:00:00Z"
 doi: ""
 featured: false
 image:
@@ -17,7 +17,7 @@ publication: 'Revise and Resubmit at Journal of Political Economy'
 publication_short: "Revise and Resubmit at Journal of Political Economy"
 publication_types:
 - "1"
-publishDate: "2024-09-03T00:00:00Z"
+publishDate: "2026-02-03T00:00:00Z"
 slides:
 summary: 
 tags:
