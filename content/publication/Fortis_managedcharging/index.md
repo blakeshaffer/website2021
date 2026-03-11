@@ -14,8 +14,8 @@ image:
   focal_point: ""
   preview_only: false
 projects: []
-publication: 'AER:Insights (forthcoming)'
-publication_short: "AER:Insights (forthcoming)"
+publication: 'American Economic Review:Insights'
+publication_short: "American Economic Review:Insights"
 publication_types:
 - "2"
 publishDate: "2025-04-03T00:00:00Z"
@@ -28,7 +28,7 @@ tags:
 title: "Electric Vehicles and the Energy Transition: Unintended Consequences of Time-of-Use Pricing"
 url_code: ""
 url_dataset: ""
-url_pdf: ""
+url_pdf: "https://www.aeaweb.org/articles?id=10.1257/aeri.20240476"
 url_preprint: "https://www.nber.org/papers/w32886"
 url_poster: ""
 url_project: ""

@@ -13,8 +13,8 @@ image:
   focal_point: ""
   preview_only: false
 projects: []
-publication: 'Working Paper'
-publication_short: "Working Paper"
+publication: 'Revise and Resubmit at Journal of Political Economy'
+publication_short: "Revise and Resubmit at Journal of Political Economy"
 publication_types:
 - "1"
 publishDate: "2024-09-03T00:00:00Z"
@@ -23,7 +23,8 @@ summary:
 tags:
 - demand response
 - field experiment
-title: "Centralized vs decentralized demand response: Evidence from a field experiment"
+title: "Take the Load Off: Effort and Technology as Determinants of Electricity Demand
+Response"
 url_code: ""
 url_dataset: ""
 url_pdf: ""
